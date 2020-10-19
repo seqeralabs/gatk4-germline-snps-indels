@@ -1,6 +1,6 @@
 FROM continuumio/miniconda:4.7.10
 
-MAINTAINER Evan Floden <evanfloden@gmail.com>
+MAINTAINER Abhinav Sharma <abhi18av@outlook.com>
 
 RUN apt-get update -y && apt-get install -y \
     procps
