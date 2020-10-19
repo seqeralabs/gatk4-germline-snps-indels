@@ -1,0 +1,32 @@
+name: gatk_samtools_python2
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - c-ares=1.16.1=haf1e3a3_3
+  - ca-certificates=2020.6.20=hecda079_0
+  - certifi=2019.11.28=py27h8c360ce_1
+  - curl=7.71.1=hcb81553_8
+  - gatk4=4.1.9.0=py39_0
+  - krb5=1.17.1=h75d18d8_3
+  - libcurl=7.71.1=h9bf37e3_8
+  - libcxx=11.0.0=h439d374_0
+  - libedit=3.1.20191231=h0678c8f_2
+  - libev=4.33=haf1e3a3_1
+  - libffi=3.2.1=hb1e8313_1007
+  - libnghttp2=1.41.0=h7580e61_2
+  - libssh2=1.9.0=h8a08a2b_5
+  - ncurses=6.2=hb1e8313_2
+  - openjdk=8.0.265=haf1e3a3_0
+  - openssl=1.1.1h=haf1e3a3_0
+  - pip=20.1.1=pyh9f0ad1d_0
+  - python=2.7.15=h8e446fc_1011_cpython
+  - python_abi=2.7=1_cp27m
+  - readline=8.0=h0678c8f_2
+  - samtools=1.3.1=h2fe303a_7
+  - setuptools=44.0.0=py27_0
+  - sqlite=3.33.0=h960bd1c_1
+  - tk=8.6.10=hb0a8c7a_1
+  - wheel=0.35.1=pyh9f0ad1d_0
+  - zlib=1.2.11=h7795811_1010
