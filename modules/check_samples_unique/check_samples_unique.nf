@@ -2,7 +2,7 @@
 params.sample_num_threshold = 50
 
 process CHECK_SAMPLES_UNIQUE {
-    // NOTE: WDL preemptible is not applicable
+    // NOTE: WDL preemptible is not applicable. See https://cromwell.readthedocs.io/en/stable/RuntimeAttributes/#preemptible
     // NOTE: We could extract all of the following directives as parameters
     memory '1 GB'
     disk '10 GB'
@@ -17,9 +17,8 @@ process CHECK_SAMPLES_UNIQUE {
     val true
 
 
-    // NOTE: In IntelliJ, when we use $ in the shello block, it colors the entire screen red.
     shell:
-    """
+    '''
     set -euo pipefail
     if [[ $(cut -f 1 !{sample_name_map} | wc -l) -ne $(cut -f 1 !{sample_name_map} | sort | uniq | wc -l) ]]
     then
@@ -33,6 +32,6 @@ process CHECK_SAMPLES_UNIQUE {
     else
       echo true
     fi
-    """
+    '''
 
 }
