@@ -20,7 +20,7 @@ process SPLIT_INTERVAL_LIST {
 
 
     output:
-    // NOTE: instead of passing an Array[File], we can simply put the dir path in the channel
+    // NOTE: Instead of passing an Array[File], as in WDL, we can simply put the dir path in the channel
     path("scatterDir")
 
     script:
