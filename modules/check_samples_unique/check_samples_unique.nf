@@ -2,11 +2,12 @@
 params.sample_num_threshold = 50
 
 process CHECK_SAMPLES_UNIQUE {
+    container "us.gcr.io/broad-gotc-prod/python:2.7"
+
     // NOTE: WDL preemptible is not applicable. See https://cromwell.readthedocs.io/en/stable/RuntimeAttributes/#preemptible
     // NOTE: We could extract all of the following directives as parameters
     memory '1 GB'
     disk '10 GB'
-    container "us.gcr.io/broad-gotc-prod/python:2.7"
 
     input:
     file(sample_name_map)
