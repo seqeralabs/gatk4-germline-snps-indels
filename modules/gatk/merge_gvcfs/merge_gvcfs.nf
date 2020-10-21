@@ -1,4 +1,4 @@
-nextflow.preview.dsl = 2
+nextflow.enable.dsl = 2
 
 params.make_gvcf = false
 params.memory = '10'

@@ -1,20 +1,11 @@
-//nextflow.preview.dsl = 2
+nextflow.enable.dsl = 2
 
 import java.nio.file.Paths
 
 params.memory = '4'
-params.refFastaName = ''
 
-
-//ref_fasta_ch = Channel.value(Paths.get("./test_data/NC000962_3.fasta"))
-//ref_fasta_ch.view()
-//
-//
-//ref_fasta_fai_ch = Channel.value(Paths.get("./test_data/NC000962_3.fasta.fai"))
-//ref_fasta_fai_ch.view()
 
 ref_fasta_ch = Channel.value([Paths.get("./test_data/NC000962_3.fasta"), Paths.get("/test_data/NC000962_3.fasta.fai")])
-ref_fasta_ch.view()
 
 ref_dict_ch = Channel.value(Paths.get("/test_data/NC000962_3.dict"))
 
@@ -27,10 +18,9 @@ process SAMTOOLS_CRAM_TO_BAM {
     maxRetries 3
 
     input:
-    tuple path(ref_fasta), path(ref_fasta_index) from ref_fasta_ch
-//    path(ref_fasta_index) from ref_fasta_fai_ch
-    path(ref_dict) from ref_dict_ch
-    path(input_cram) from input_cram_ch
+    tuple path(ref_fasta), path(ref_fasta_index)
+    path(ref_dict)
+    path(input_cram)
 
 
     output:
@@ -53,10 +43,11 @@ process SAMTOOLS_CRAM_TO_BAM {
 
 }
 
-//workflow test {
-//    ref_fasta_ch = Channel.value(["/test_data/*fasta", "/test_data/*fasta.fai"])
-//    ref_dict_ch = Channel.value("/test_data/*dict")
-//    input_cram_ch = Channel.fromPath("/test_data/*cram")
-//    SAMTOOLS_CRAM_TO_BAM(ref_fasta_ch, ref_dict_ch, input_cram_ch)
-//
-//}
+workflow test {
+    ref_fasta_ch = Channel.value([Paths.get("./test_data/NC000962_3.fasta"), Paths.get("/test_data/NC000962_3.fasta.fai")])
+    ref_dict_ch = Channel.value(Paths.get("/test_data/NC000962_3.dict"))
+    input_cram_ch = Channel.fromPath("./test_data/*cram")
+
+    SAMTOOLS_CRAM_TO_BAM(ref_fasta_ch, ref_dict_ch, input_cram_ch)
+
+}

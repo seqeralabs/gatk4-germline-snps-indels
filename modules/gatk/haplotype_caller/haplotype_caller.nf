@@ -1,4 +1,4 @@
-nextflow.preview.dsl = 2
+nextflow.enable.dsl = 2
 
 params.contamination
 params.make_gvcf = false
