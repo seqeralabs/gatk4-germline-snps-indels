@@ -1,5 +1,7 @@
 nextflow.enable.dsl = 2
 
+import java.nio.file.Paths
+
 params.make_gvcf = false
 params.memory = '10'
 
@@ -18,7 +20,9 @@ process GATK_MERGE_GVCFS {
     tuple path("${output_filename}"), path("${output_filename}.tbi")
 
     script:
-    input_str = input_vcf.reduce("") { list_of_vcfs, new_vcf -> list_of_vcfs + " --INPUT ${new_vcf}" }.join(' ')
+    input_str = input_vcf
+            .reduce("") { list_of_vcfs, new_vcf -> list_of_vcfs + " --INPUT ${new_vcf}" }
+            .join(' ')
     output_suffix = params.make_gvcf ? ".g.vcf.gz" : ".vcf.gz"
     output_filename = input_vcf.getBaseName() + output_suffix
 
@@ -35,7 +39,8 @@ process GATK_MERGE_GVCFS {
 
 
 workflow test {
-    input_vcf_ch = Channel.value(["./test_data/*vcf", "./test_data/*tbi"])
+    input_vcf_ch = Channel.value([Paths.get("./test_data/*vcf"), Paths.get("./test_data/*tbi")])
+
     GATK_MERGE_GVCFS(input_vcf_ch)
 
 }
