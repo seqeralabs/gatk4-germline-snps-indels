@@ -4,8 +4,8 @@ import java.nio.file.Paths
 
 
 params.contamination = 0
-params.make_gvcf = false
-params.make_bamout = false
+//params.make_gvcf = false
+//params.make_bamout = false
 
 params.memory = '4'
 params.gatk_java_opts = ''
@@ -18,7 +18,7 @@ process GATK_HAPLOTYPE_CALLER {
 
     input:
     tuple path(ref_fasta), path(ref_fasta_index)
-    path path(ref_dict)
+    path(ref_dict)
     tuple path(input_bam), path(input_bam_index)
     path(interval_list)
 
@@ -30,7 +30,7 @@ process GATK_HAPLOTYPE_CALLER {
     script:
     output_suffix = params.make_gvcf ? ".g.vcf.gz" : ".vcf.gz"
     output_filename = input_bam.getBaseName() + output_suffix
-    bamout_arg = params.make_bamout ? "-bamout ${vcf_basename}.bamout.bam" : ""
+    bamout_arg = params.make_bamout ? "-bamout ${input_bam.getBaseName()}.bamout.bam" : ""
 
     """
     set -e
@@ -57,13 +57,13 @@ workflow test {
     params.make_gvcf = true
     params.make_bamout = true
 
-    input_vcf_ch = Channel.value([Paths.get("./test_data/*vcf"), Paths.get("./test_data/*tbi")])
+    ref_fasta_ch = Channel.value([Paths.get("./test_data/Homo_sapiens_assembly38.fasta"), Paths.get("./test_data/Homo_sapiens_assembly38.fasta.fai")])
     ref_dict_ch = Channel.value(Paths.get("./test_data/Homo_sapiens_assembly38.dict"))
-    input_bam_ch = Channel.value([Paths.get("./test_data/*bam"), Paths.get("./test_data/*bai")])
-    interval_list_ch = Channel.value(Paths.get("./test_data/Homo_sapiens_assembly38.dict"))
+    input_bam_ch = Channel.fromPath(["./test_data/*bam", "./test_data/*bai"])
+    interval_list_ch = Channel.fromPath("./test_data/*intervals.txt")
 
     GATK_HAPLOTYPE_CALLER(
-            input_vcf_ch,
+            ref_fasta_ch,
             ref_dict_ch,
             input_bam_ch,
             interval_list_ch
