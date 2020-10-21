@@ -37,8 +37,8 @@ process GATK_MERGE_GVCFS {
 
 
 workflow test {
-    input_vcf_ch = Channel.fromPath(["${baseDir}/test_data/*.vcf",
-                                     "${baseDir}/test_data/*.tbi"]).buffer(size: 2)
+    input_vcf_ch = Channel.fromPath(["${baseDir}/test_data/*.vcf.gz",
+                                     "${baseDir}/test_data/*.tbi.gz"]).buffer(size: 2)
 
     GATK_MERGE_GVCFS(input_vcf_ch)
 
