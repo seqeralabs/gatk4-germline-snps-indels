@@ -59,8 +59,8 @@ workflow test {
 
     ref_fasta_ch = Channel.value([Paths.get("./test_data/Homo_sapiens_assembly38.fasta"), Paths.get("./test_data/Homo_sapiens_assembly38.fasta.fai")])
     ref_dict_ch = Channel.value(Paths.get("./test_data/Homo_sapiens_assembly38.dict"))
-    input_bam_ch = Channel.fromPath(["./test_data/*bam", "./test_data/*bai"])
-    interval_list_ch = Channel.value(Paths.get("./test_data/*intervals.txt"))
+    input_bam_ch = Channel.fromPath(["./test_data/NA12878_24RG_small.hg38.bam", "./test_data/NA12878_24RG_small.hg38.bai"])
+    interval_list_ch = Channel.value(Paths.get("./test_data/hg38_wgs_scattered_calling_intervals.txt "))
 
     GATK_HAPLOTYPE_CALLER(
             ref_fasta_ch,
@@ -70,3 +70,7 @@ workflow test {
     )
 
 }
+
+
+
+
