@@ -1,4 +1,4 @@
-nextflow.preview.dsl = 2
+nextflow.enable.dsl = 2
 
 include { SAMTOOLS_CRAM_TO_BAM } from "../modules/samtools/cram_to_bam/cram_to_bam"
 include { GATK_HAPLOTYPE_CALLER } from "../modules/gatk/haplotype_caller/haplotype_caller"
