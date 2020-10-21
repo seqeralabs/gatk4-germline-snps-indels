@@ -35,9 +35,9 @@ process SAMTOOLS_CRAM_TO_BAM {
 }
 
 workflow test {
-    ref_fasta_ch = Channel.value(["./test_data/*fasta", "./test_data/*fasta.fai"])
-    ref_dict_ch = Channel.value("./test_data/*dict")
-    input_cram_ch = Channel.fromPath("./test_data/*cram")
+    ref_fasta_ch = Channel.value(["/test_data/*fasta", "/test_data/*fasta.fai"])
+    ref_dict_ch = Channel.value("/test_data/*dict")
+    input_cram_ch = Channel.fromPath("/test_data/*cram")
     SAMTOOLS_CRAM_TO_BAM(ref_fasta_ch, ref_dict_ch, input_cram_ch)
 
 }
