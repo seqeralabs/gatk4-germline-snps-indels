@@ -5,12 +5,6 @@ import java.nio.file.Paths
 params.memory = '4'
 
 
-ref_fasta_ch = Channel.value([Paths.get("./test_data/NC000962_3.fasta"), Paths.get("/test_data/NC000962_3.fasta.fai")])
-
-ref_dict_ch = Channel.value(Paths.get("/test_data/NC000962_3.dict"))
-
-input_cram_ch = Channel.fromPath("./test_data/*cram")
-
 process SAMTOOLS_CRAM_TO_BAM {
     container = "broadinstitute/genomes-in-the-cloud:2.3.1-1500064817"
     memory "${params.memory}GB"
