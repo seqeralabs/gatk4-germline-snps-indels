@@ -1,6 +1,6 @@
-import java.nio.file.Paths
-
 nextflow.enable.dsl = 2
+
+import java.nio.file.Paths
 
 params.contamination = 0
 params.make_gvcf = false
@@ -55,7 +55,11 @@ workflow test {
     params.make_bamout = true
 
     input_vcf_ch = Channel.value([Paths.get("./test_data/*vcf"), Paths.get("./test_data/*tbi")])
+    ref_dict_ch = Channel.value(Paths.get("./test_data/Homo_sapiens_assembly38.dict"))
 
-    GATK_HAPLOTYPE_CALLER()
+    GATK_HAPLOTYPE_CALLER(
+            input_vcf_ch,
+            ref_dict_ch,
+    )
 
 }
