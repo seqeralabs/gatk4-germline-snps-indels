@@ -2,9 +2,11 @@ nextflow.enable.dsl = 2
 
 import java.nio.file.Paths
 
+
 params.contamination = 0
 params.make_gvcf = false
 params.make_bamout = false
+
 params.memory = '4'
 params.gatk_java_opts = ''
 
@@ -20,6 +22,7 @@ process GATK_HAPLOTYPE_CALLER {
     tuple path(input_bam), path(input_bam_index)
     path(interval_list)
 
+
     output:
     tuple path("${output_file_name}"), path("${output_file_name}.tbi")
     path("${vcf_basename}.bamout.bam") optional true
@@ -27,7 +30,7 @@ process GATK_HAPLOTYPE_CALLER {
     script:
     output_suffix = params.make_gvcf ? ".g.vcf.gz" : ".vcf.gz"
     output_filename = input_bam.getBaseName() + output_suffix
-    bamout_arg = make_bamout ? "-bamout ${vcf_basename}.bamout.bam" : ""
+    bamout_arg = params.make_bamout ? "-bamout ${vcf_basename}.bamout.bam" : ""
 
     """
     set -e
@@ -56,10 +59,14 @@ workflow test {
 
     input_vcf_ch = Channel.value([Paths.get("./test_data/*vcf"), Paths.get("./test_data/*tbi")])
     ref_dict_ch = Channel.value(Paths.get("./test_data/Homo_sapiens_assembly38.dict"))
+    input_bam_ch = Channel.value([Paths.get("./test_data/*bam"), Paths.get("./test_data/*bai")])
+    interval_list_ch = Channel.value(Paths.get("./test_data/Homo_sapiens_assembly38.dict"))
 
     GATK_HAPLOTYPE_CALLER(
             input_vcf_ch,
             ref_dict_ch,
+            input_bam_ch,
+            interval_list_ch
     )
 
 }
