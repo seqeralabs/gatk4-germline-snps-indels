@@ -57,9 +57,12 @@ workflow test {
 
 
     ref_fasta_ch = Channel.value([Paths.get("./test_data/Homo_sapiens_assembly38.fasta"), Paths.get("./test_data/Homo_sapiens_assembly38.fasta.fai")])
+
     ref_dict_ch = Channel.value(Paths.get("./test_data/Homo_sapiens_assembly38.dict"))
+
     input_bam_ch = Channel.fromPath(["${baseDir}/test_data/*.bam",
-                                     "${baseDir}/test_data/*.bai"])
+                                     "${baseDir}/test_data/*.bai"]).buffer(size: 2)
+
     interval_list_ch = Channel.value(Paths.get("./test_data/test-intervals.hg38.list"))
 
     GATK_HAPLOTYPE_CALLER(
