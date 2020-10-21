@@ -21,5 +21,10 @@ workflow {
     take:
 
     main:
+    SAMTOOLS_CRAM_TO_BAM
+    GATK_HAPLOTYPE_CALLER
+    GATK_MERGE_GVCFS
+
+    emit:
 
 }

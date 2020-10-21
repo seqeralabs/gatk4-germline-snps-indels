@@ -3,7 +3,7 @@
 //===========================
 
 params.contamination
-params.make_gvcf
+params.make_gvcf = false
 params.make_bamout
 params.hc_scatter
 params.gcs_project_for_requester_pays = false
@@ -17,7 +17,7 @@ process GATK_HAPLOTYPE_CALLER {
 //---------------------------
 //  directives
 //---------------------------
-
+    container = "broadinstitute/genomes-in-the-cloud:2.3.1-1500064817"
 
 //---------------------------
     input:

@@ -2,11 +2,8 @@
 // Module parameters
 //===========================
 
-params.contamination
-params.output_filename
-params.gatk_path
-params.machine_mem_gb
-params.command_mem_gb
+params.make_gvcf = false
+params.memory = '10'
 
 //===========================
 // Process definition
@@ -16,11 +13,10 @@ process GATK_MERGE_GVCFS {
 
 
 //---------------------------
-// directives
+//  directives
 //---------------------------
-    container
-    memory
-    disk
+    container = "broadinstitute/genomes-in-the-cloud:2.3.1-1500064817"
+    memory "${params.memory}GB"
     // NOTE: WDL pre-emptible is not applicable. See https://cromwell.readthedocs.io/en/stable/RuntimeAttributes/#preemptible
     // NOTE: Instead of WDL preemptive, we can rely on the excutor-independent `errorStrategy` and `maxRetries` directives in NXF
     errorStrategy
@@ -29,25 +25,28 @@ process GATK_MERGE_GVCFS {
 //---------------------------
     input:
 //---------------------------
-    path(input_vcfs)
-    path(input_vcfs_indexes)
+    tuple path(input_vcf), path(input_vcf_index)
 
 
 //---------------------------
     output:
 //---------------------------
+    tuple path("${output_filename}"), path("${output_filename}.tbi")
 
 //---------------------------
     script:
 //---------------------------
+    input_str = input_vcf.reduce("") { a, b -> a + " --INPUT ${b}" }.join(' ')
+    output_suffix = params.make_gvcf ? ".g.vcf.gz" : ".vcf.gz"
+    output_filename = input_vcf.getBaseName() + output_suffix
 
     """
     set -e
 
-    ${gatk_path} --java-options "-Xmx${command_mem_gb}G"  \
+    ${gatk_path} --java-options "-Xmx${$params.memory}G"  \
       MergeVcfs \
-      --INPUT ${sep = ' --INPUT ' input_vcfs} \
-      --OUTPUT ~{output_filename}
+      --INPUT ${input_str} \
+      --OUTPUT ${output_filename}
     
-"""
+    """
 }
