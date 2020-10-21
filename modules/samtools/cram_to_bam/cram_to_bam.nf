@@ -1,39 +1,22 @@
-//===========================
-// Module parameters
-//===========================
-params.samtools_path
+nextflow.preview.dsl = 2
 
-//===========================
-// Process definition
-//===========================
+params.samtools_path
 
 process SAMTOOLS_CRAM_TO_BAM {
 
-//---------------------------
-// directives
-//---------------------------
     container = "broadinstitute/genomes-in-the-cloud:2.3.1-1500064817"
 
 
-//---------------------------
     input:
-//---------------------------
-    path(ref_fasta)
-    path(ref_fasta_index)
-    path(ref_dict)
+    tuple path(ref_fasta), path(ref_fasta_index), path(ref_dict)
     path(input_cram)
 
 
-//---------------------------
     output:
-//---------------------------
-    path("${sample_name}.bam")
-    path("${sample_name}.bai")
+    tuple path("${sample_name}.bam"), path("${sample_name}.bai")
 
 
-//---------------------------
     script:
-//---------------------------
     sample_name = input_cram.getBaseName()
 
     """
