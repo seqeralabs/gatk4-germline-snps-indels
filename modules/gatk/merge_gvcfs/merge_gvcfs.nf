@@ -1,7 +1,5 @@
 nextflow.enable.dsl = 2
 
-import java.nio.file.Paths
-
 params.make_gvcf = false
 params.memory = '10'
 
@@ -30,16 +28,17 @@ process GATK_MERGE_GVCFS {
     set -e
 
     /gatk/gatk --java-options "-Xmx${$params.memory}G"  \
-        MergeVcfs \
-        ${input_str} \
-        --OUTPUT ${output_filename}
+          MergeVcfs \
+          ${input_str} \
+          --OUTPUT ${output_filename}
     
     """
 }
 
 
 workflow test {
-    input_vcf_ch = Channel.value([Paths.get("./test_data/*vcf"), Paths.get("./test_data/*tbi")])
+    input_vcf_ch = Channel.fromPath(["${baseDir}/test_data/*.vcf",
+                                     "${baseDir}/test_data/*.tbi"]).buffer(size: 2)
 
     GATK_MERGE_GVCFS(input_vcf_ch)
 
