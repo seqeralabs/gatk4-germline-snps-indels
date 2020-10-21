@@ -18,8 +18,7 @@ process GATK_HAPLOTYPE_CALLER {
     tuple path(ref_fasta), path(ref_fasta_index)
     path path(ref_dict)
     tuple path(input_bam), path(input_bam_index)
-    // TODO: Shall we use an hg38 interval list?
-//    path(interval_list)
+    path(interval_list)
 
     output:
     tuple path("${output_file_name}"), path("${output_file_name}.tbi")

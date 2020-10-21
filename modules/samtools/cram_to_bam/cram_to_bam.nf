@@ -39,9 +39,9 @@ process SAMTOOLS_CRAM_TO_BAM {
 
 workflow test {
 
-    ref_fasta_ch = Channel.value([Paths.get("./test_data/NC000962_3.fasta"), Paths.get("/test_data/NC000962_3.fasta.fai")])
+    ref_fasta_ch = Channel.value([Paths.get("./test_data/Homo_sapiens_assembly38.fasta"), Paths.get("./test_data/Homo_sapiens_assembly38.fasta.fai")])
 
-    ref_dict_ch = Channel.value(Paths.get("./test_data/NC000962_3.dict"))
+    ref_dict_ch = Channel.value(Paths.get("./test_data/Homo_sapiens_assembly38.dict"))
 
     input_cram_ch = Channel.fromPath("./test_data/*cram")
 
