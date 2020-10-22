@@ -1,6 +1,6 @@
-import java.nio.file.Paths
-
 nextflow.enable.dsl = 2
+
+import java.nio.file.Paths
 
 include { SAMTOOLS_CRAM_TO_BAM } from "../modules/samtools/cram_to_bam/cram_to_bam"
 include { GATK_HAPLOTYPE_CALLER } from "../modules/gatk/haplotype_caller/haplotype_caller"
@@ -30,17 +30,17 @@ def output_suffix = make_gvcf ? ".g.vcf.gz" : ".vcf.gz"
 
 def output_filename = vcf_basename + output_suffix
 
+Channel.value([Paths.get("${baseDir}/../test_data/Homo_sapiens_assembly38.fasta"),
+               Paths.get("${baseDir}/../test_data/Homo_sapiens_assembly38.fasta.fai")])
+        .set { ref_fasta_ch }
+
+Channel.value(Paths.get("${baseDir}/../test_data/Homo_sapiens_assembly38.dict"))
+        .set { ref_dict_ch }
+
+Channel.fromPath("${baseDir}/test_data/*cram")
+        .set { input_cram_ch }
+
 workflow {
-    take:
-
-    ref_fasta_ch = Channel.value([Paths.get("${baseDir}/../test_data/Homo_sapiens_assembly38.fasta"),
-                                  Paths.get("${baseDir}/../test_data/Homo_sapiens_assembly38.fasta.fai")])
-
-    ref_dict_ch = Channel.value(Paths.get("${baseDir}/../test_data/Homo_sapiens_assembly38.dict"))
-
-
-    input_bam_ch = Channel.fromPath(["${baseDir}/../test_data/*.bam",
-                                     "${baseDir}/../test_data/*.bai"]).buffer(size: 2)
 
     main:
     SAMTOOLS_CRAM_TO_BAM(
