@@ -23,13 +23,13 @@ process GATK_HAPLOTYPE_CALLER {
 
 
     output:
-    tuple path("${output_filename}"), path("${output_filename}.tbi")
+    tuple path("${output_vcf}"), path("${output_vcf}.tbi")
     path("${bam_basename}.bamout.bam") optional true
 
     script:
     output_suffix = params.make_gvcf ? ".g.vcf.gz" : ".vcf.gz"
     bam_basename = input_bam.getBaseName()
-    output_filename = input_bam.getBaseName() + output_suffix
+    output_vcf = input_bam.getBaseName() + output_suffix
     bamout_arg = params.make_bamout ? "-bamout ${bam_basename}.bamout.bam" : ""
 
     """
@@ -40,7 +40,7 @@ process GATK_HAPLOTYPE_CALLER {
           -R ${ref_fasta} \
           -I ${input_bam} \
           -L ${interval_list} \
-          -O ${output_filename} \
+          -O ${output_vcf} \
           -contamination ${params.gatk_haplotype_caller_contamination} \
           -G StandardAnnotation \
           -G StandardHCAnnotation \
