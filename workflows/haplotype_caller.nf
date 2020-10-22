@@ -60,6 +60,7 @@ workflow {
             interval_list_ch
     )
 
-//    GATK_MERGE_GVCFS
-
+    GATK_MERGE_GVCFS(
+            GATK_HAPLOTYPE_CALLER.out[0].flatten
+    )
 }

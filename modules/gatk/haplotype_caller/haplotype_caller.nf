@@ -39,7 +39,6 @@ process GATK_HAPLOTYPE_CALLER {
           HaplotypeCaller \
           -R ${ref_fasta} \
           -I ${input_bam} \
-          -L ${interval_list} \
           -O ${output_vcf} \
           -contamination ${params.gatk_haplotype_caller_contamination} \
           -G StandardAnnotation \
@@ -49,6 +48,9 @@ process GATK_HAPLOTYPE_CALLER {
           ${params.make_gvcf ? "-ERC GVCF" : ""} \
           ${bamout_arg}
     """
+
+
+//    -L ${interval_list} \
 }
 
 
