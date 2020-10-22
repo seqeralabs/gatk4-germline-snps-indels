@@ -2,12 +2,12 @@ nextflow.enable.dsl = 2
 
 import java.nio.file.Paths
 
-params.memory = '4'
+params.samtools_cram_to_bam_memory = '4'
 
 
 process SAMTOOLS_CRAM_TO_BAM {
     container = "broadinstitute/genomes-in-the-cloud:2.3.1-1500064817"
-    memory "${params.memory}GB"
+    memory "${params.samtools_cram_to_bam_memory}GB"
     errorStrategy 'retry'
     maxRetries 3
 
@@ -41,7 +41,9 @@ workflow test {
 
     ref_fasta_ch = Channel.value([Paths.get("${baseDir}/test_data/Homo_sapiens_assembly38.fasta"),
                                   Paths.get("${baseDir}/test_data/Homo_sapiens_assembly38.fasta.fai")])
+
     ref_dict_ch = Channel.value(Paths.get("${baseDir}/test_data/Homo_sapiens_assembly38.dict"))
+
     input_cram_ch = Channel.fromPath("${baseDir}/test_data/*cram")
 
     SAMTOOLS_CRAM_TO_BAM(
