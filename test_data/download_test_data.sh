@@ -22,3 +22,5 @@ gsutil cp gs://gcp-public-data--broad-references/hg38/v0/Homo_sapiens_assembly38
 
 # INTERVALS
 gsutil cp gs://gatk-test-data/intervals/test-intervals.hg38.list ./
+gsutil cp gs://gatk-test-data/intervals/hg38_wgs_scattered_calling_intervals.txt ./
+gsutil cp gs://gcp-public-data--broad-references/hg38/v0/scattered_calling_intervals/ ./
