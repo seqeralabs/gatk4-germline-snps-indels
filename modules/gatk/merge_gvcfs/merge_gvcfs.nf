@@ -1,6 +1,6 @@
 nextflow.enable.dsl = 2
 
-params.gatk_merge_gvcfs_make_gvcf = true
+params.make_gvcf = false
 params.gatk_merge_gvcfs_memory = '10'
 
 
@@ -21,7 +21,7 @@ process GATK_MERGE_GVCFS {
     input_str = input_vcf
             .reduce("") { list_of_vcfs, new_vcf -> list_of_vcfs + " --INPUT ${new_vcf}" }
             .join(' ')
-    output_suffix = params.gatk_merge_gvcfs_make_gvcf ? ".g.vcf.gz" : ".vcf.gz"
+    output_suffix = params.make_gvcf ? ".g.vcf.gz" : ".vcf.gz"
     output_filename = input_vcf.getBaseName() + output_suffix
 
     """

@@ -4,8 +4,8 @@ import java.nio.file.Paths
 
 
 params.gatk_haplotype_caller_contamination = 0
-params.gatk_haplotype_caller_make_gvcf = true
-params.gatk_haplotype_caller_make_bamout = true
+params.make_gvcf = true
+params.make_bamout = true
 
 params.gatk_haplotype_caller_memory = '4'
 params.gatk_haplotype_caller_java_opts = ''
@@ -28,10 +28,10 @@ process GATK_HAPLOTYPE_CALLER {
     path("${bam_basename}.bamout.bam") optional true
 
     script:
-    output_suffix = params.gatk_haplotype_caller_make_gvcf ? ".g.vcf.gz" : ".vcf.gz"
+    output_suffix = params.make_gvcf ? ".g.vcf.gz" : ".vcf.gz"
     bam_basename = input_bam.getBaseName()
     output_filename = input_bam.getBaseName() + output_suffix
-    bamout_arg = params.gatk_haplotype_caller_make_bamout ? "-bamout ${bam_basename}.bamout.bam" : ""
+    bamout_arg = params.make_bamout ? "-bamout ${bam_basename}.bamout.bam" : ""
 
     """
     set -e
@@ -45,9 +45,9 @@ process GATK_HAPLOTYPE_CALLER {
           -contamination ${params.gatk_haplotype_caller_contamination} \
           -G StandardAnnotation \
           -G StandardHCAnnotation \
-          ${params.gatk_haplotype_caller_make_gvcf ? "-G AS_StandardAnnotation" : ""} \
+          ${params.make_gvcf ? "-G AS_StandardAnnotation" : ""} \
           -GQB 10 -GQB 20 -GQB 30 -GQB 40 -GQB 50 -GQB 60 -GQB 70 -GQB 80 -GQB 90 \
-          ${params.gatk_haplotype_caller_make_gvcf ? "-ERC GVCF" : ""} \
+          ${params.make_gvcf ? "-ERC GVCF" : ""} \
           ${bamout_arg}
     """
 }
