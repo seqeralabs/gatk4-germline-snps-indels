@@ -40,6 +40,9 @@ Channel.value(Paths.get("${baseDir}/../test_data/Homo_sapiens_assembly38.dict"))
 Channel.fromPath("${baseDir}/../test_data/*cram")
         .set { input_cram_ch }
 
+Channel.value(Paths.get("${baseDir}/../test_data/test-intervals.hg38.list"))
+        .set { interval_list_ch }
+
 workflow {
 
     main:
@@ -49,7 +52,13 @@ workflow {
             input_cram_ch
     )
 
-//    GATK_HAPLOTYPE_CALLER
+    GATK_HAPLOTYPE_CALLER(
+            ref_fasta_ch,
+            ref_dict_ch,
+            SAMTOOLS_CRAM_TO_BAM.out[0],
+            interval_list_ch
+    )
+
 //    GATK_MERGE_GVCFS
 
 }
