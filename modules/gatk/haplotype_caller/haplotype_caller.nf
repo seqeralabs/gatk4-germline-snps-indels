@@ -18,8 +18,7 @@ process GATK_HAPLOTYPE_CALLER {
     input:
     tuple path(ref_fasta), path(ref_fasta_index)
     path(ref_dict)
-    // FIXME
-    path(input_bam)
+    tuple path(input_bam), path(input_bam_index)
     path(interval_list)
 
 
@@ -61,7 +60,7 @@ workflow test {
 
     ref_dict_ch = Channel.value(Paths.get("${baseDir}/test_data/Homo_sapiens_assembly38.dict"))
 
-    input_bam_ch = Channel.fromPath("${baseDir}/test_data/*bam*").collect()
+    input_bam_ch = Channel.fromPath("${baseDir}/test_data/*bam*").toSortedList().flatten().collate(2)
 
     interval_list_ch = Channel.value(Paths.get("${baseDir}/test_data/test-intervals.hg38.list"))
 
