@@ -28,7 +28,7 @@ def vcf_basename = get_sample_basename
 
 def output_suffix = make_gvcf ? ".g.vcf.gz" : ".vcf.gz"
 
-def output_filename = vcf_basename + output_suffix
+//def output_filename = vcf_basename + output_suffix
 
 Channel.value([Paths.get("${baseDir}/../test_data/Homo_sapiens_assembly38.fasta"),
                Paths.get("${baseDir}/../test_data/Homo_sapiens_assembly38.fasta.fai")])
@@ -37,7 +37,7 @@ Channel.value([Paths.get("${baseDir}/../test_data/Homo_sapiens_assembly38.fasta"
 Channel.value(Paths.get("${baseDir}/../test_data/Homo_sapiens_assembly38.dict"))
         .set { ref_dict_ch }
 
-Channel.fromPath("${baseDir}/test_data/*cram")
+Channel.fromPath("${baseDir}/../test_data/*cram")
         .set { input_cram_ch }
 
 workflow {
