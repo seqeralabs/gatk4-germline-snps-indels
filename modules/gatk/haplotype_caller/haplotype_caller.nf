@@ -18,7 +18,8 @@ process GATK_HAPLOTYPE_CALLER {
     input:
     tuple path(ref_fasta), path(ref_fasta_index)
     path(ref_dict)
-    tuple path(input_bam), path(input_bam_index)
+    // FIXME
+    path(input_bam)
     path(interval_list)
 
 
@@ -41,8 +42,6 @@ process GATK_HAPLOTYPE_CALLER {
           -I ${input_bam} \
           -O ${output_vcf} \
           -contamination ${params.gatk_haplotype_caller_contamination} \
-          -G StandardAnnotation \
-          -G StandardHCAnnotation \
           ${params.make_gvcf ? "-G AS_StandardAnnotation" : ""} \
           -GQB 10 -GQB 20 -GQB 30 -GQB 40 -GQB 50 -GQB 60 -GQB 70 -GQB 80 -GQB 90 \
           ${params.make_gvcf ? "-ERC GVCF" : ""} \
@@ -62,8 +61,7 @@ workflow test {
 
     ref_dict_ch = Channel.value(Paths.get("${baseDir}/test_data/Homo_sapiens_assembly38.dict"))
 
-    input_bam_ch = Channel.fromPath(["${baseDir}/test_data/*.bam",
-                                     "${baseDir}/test_data/*.bai"]).buffer(size: 2)
+    input_bam_ch = Channel.fromPath("${baseDir}/test_data/*bam*").collect()
 
     interval_list_ch = Channel.value(Paths.get("${baseDir}/test_data/test-intervals.hg38.list"))
 
