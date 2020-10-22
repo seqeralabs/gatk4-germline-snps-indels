@@ -7,8 +7,6 @@ params.samtools_cram_to_bam_memory = '4'
 process SAMTOOLS_CRAM_TO_BAM {
     container = "broadinstitute/genomes-in-the-cloud:2.3.1-1500064817"
     memory "${params.samtools_cram_to_bam_memory}GB"
-    errorStrategy 'retry'
-    maxRetries 3
 
     input:
     tuple path(ref_fasta), path(ref_fasta_index)

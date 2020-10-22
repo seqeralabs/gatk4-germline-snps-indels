@@ -8,13 +8,12 @@ params.make_gvcf = true
 params.make_bamout = true
 
 params.gatk_haplotype_caller_memory = '4'
-params.gatk_haplotype_caller_java_opts = ''
+params.gatk_haplotype_caller_java_opts = "-XX:GCTimeLimit=50 -XX:GCHeapFreeLimit=10"
 
 process GATK_HAPLOTYPE_CALLER {
     container = "broadinstitute/gatk:4.1.8.1"
     memory "${params.gatk_haplotype_caller_memory}GB"
-    errorStrategy 'retry'
-    maxRetries 3
+
 
     input:
     tuple path(ref_fasta), path(ref_fasta_index)
@@ -40,6 +39,7 @@ process GATK_HAPLOTYPE_CALLER {
           HaplotypeCaller \
           -R ${ref_fasta} \
           -I ${input_bam} \
+          -L ${interval_list} \
           -O ${output_filename} \
           -contamination ${params.gatk_haplotype_caller_contamination} \
           -G StandardAnnotation \
@@ -49,8 +49,6 @@ process GATK_HAPLOTYPE_CALLER {
           ${params.make_gvcf ? "-ERC GVCF" : ""} \
           ${bamout_arg}
     """
-
-//    -L ${interval_list} \
 }
 
 

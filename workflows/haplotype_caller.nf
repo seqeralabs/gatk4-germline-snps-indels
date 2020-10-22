@@ -40,6 +40,7 @@ Channel.value(Paths.get("${baseDir}/../test_data/Homo_sapiens_assembly38.dict"))
 Channel.fromPath("${baseDir}/../test_data/*cram")
         .set { input_cram_ch }
 
+// TODO Proces the intervals file line-by-line (counterpart to WDL scatter)
 Channel.value(Paths.get("${baseDir}/../test_data/test-intervals.hg38.list"))
         .set { interval_list_ch }
 
