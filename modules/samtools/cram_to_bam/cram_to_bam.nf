@@ -8,7 +8,7 @@ params_map = [
 
 process SAMTOOLS_CRAM_TO_BAM {
     container = "broadinstitute/genomes-in-the-cloud:2.3.1-1500064817"
-    memory "${params_map[memory]}GB"
+    memory "${params_map.memory}GB"
     errorStrategy 'retry'
     maxRetries 3
 

@@ -2,17 +2,18 @@ nextflow.enable.dsl = 2
 
 import java.nio.file.Paths
 
+params_map = [
+        contamination: params.gatk_haplotype_caller_contamination = 0,
+        make_gvcf    : params.gatk_haplotype_caller_make_gvcf = true,
+        make_bamout  : params.gatk_haplotype_caller_make_bamout = true,
+        memory       : params.gatk_haplotype_caller_memory = '4',
+        java_opts    : params.gatk_haplotype_caller_java_opts = '',
+]
 
-params.gatk_haplotype_caller_contamination = 0
-params.gatk_haplotype_caller_make_gvcf = true
-params.gatk_haplotype_caller_make_bamout = true
-
-params.gatk_haplotype_caller_memory = '4'
-params.gatk_haplotype_caller_java_opts = ''
 
 process GATK_HAPLOTYPE_CALLER {
     container = "broadinstitute/gatk:4.1.8.1"
-    memory "${params.gatk_haplotype_caller_memory}GB"
+    memory "${params_map.memory}GB"
     errorStrategy 'retry'
     maxRetries 3
 
@@ -28,26 +29,26 @@ process GATK_HAPLOTYPE_CALLER {
     path("${bam_basename}.bamout.bam") optional true
 
     script:
-    output_suffix = params.gatk_haplotype_caller_make_gvcf ? ".g.vcf.gz" : ".vcf.gz"
+    output_suffix = params_map.make_gvcf ? ".g.vcf.gz" : ".vcf.gz"
     bam_basename = input_bam.getBaseName()
     output_filename = input_bam.getBaseName() + output_suffix
-    bamout_arg = params.gatk_haplotype_caller_make_bamout ? "-bamout ${bam_basename}.bamout.bam" : ""
+    bamout_arg = params_map.make_bamout ? "-bamout ${bam_basename}.bamout.bam" : ""
 
     """
     set -e
 
-    /gatk/gatk --java-options "-Xmx${params.gatk_haplotype_caller_memory}G ${params.gatk_haplotype_caller_java_opts}" \
+    /gatk/gatk --java-options "-Xmx${params_map.memory}G ${params_map.java_opts}" \
           HaplotypeCaller \
           -R ${ref_fasta} \
           -I ${input_bam} \
           -L ${interval_list} \
           -O ${output_filename} \
-          -contamination ${params.gatk_haplotype_caller_contamination} \
+          -contamination ${params_map.contamination} \
           -G StandardAnnotation \
           -G StandardHCAnnotation \
-          ${params.gatk_haplotype_caller_make_gvcf ? "-G AS_StandardAnnotation" : ""} \
+          ${params_map.make_gvcf ? "-G AS_StandardAnnotation" : ""} \
           -GQB 10 -GQB 20 -GQB 30 -GQB 40 -GQB 50 -GQB 60 -GQB 70 -GQB 80 -GQB 90 \
-          ${params.gatk_haplotype_caller_make_gvcf ? "-ERC GVCF" : ""} \
+          ${params_map.make_gvcf ? "-ERC GVCF" : ""} \
           ${bamout_arg}
     """
 }
