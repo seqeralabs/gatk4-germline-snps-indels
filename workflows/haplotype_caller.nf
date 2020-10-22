@@ -7,8 +7,8 @@ include { GATK_HAPLOTYPE_CALLER } from "../modules/gatk/haplotype_caller/haploty
 include { GATK_MERGE_GVCFS } from "../modules/gatk/merge_gvcfs/merge_gvcfs"
 
 
-make_gvcf = true
-make_bamout = true
+params.make_gvcf = true
+params.make_bamout = true
 
 def is_cram(input_bam_path) {
     return file(input_bam_path).getExtension() == "cram"
