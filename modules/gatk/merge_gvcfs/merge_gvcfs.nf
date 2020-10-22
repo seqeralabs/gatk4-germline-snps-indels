@@ -1,6 +1,6 @@
 nextflow.enable.dsl = 2
 
-params.make_gvcf = false
+params.make_gvcf = true
 params.memory = '10'
 
 
@@ -38,7 +38,7 @@ process GATK_MERGE_GVCFS {
 
 workflow test {
     input_vcf_ch = Channel.fromPath(["${baseDir}/test_data/*.vcf.gz",
-                                     "${baseDir}/test_data/*.tbi.gz"]).buffer(size: 2)
+                                     "${baseDir}/test_data/*.tbi"]).buffer(size: 2)
 
     GATK_MERGE_GVCFS(input_vcf_ch)
 

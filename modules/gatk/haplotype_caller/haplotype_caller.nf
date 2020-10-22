@@ -4,11 +4,11 @@ import java.nio.file.Paths
 
 
 params.contamination = 0
-params.make_gvcf = true
-params.make_bamout = true
+params.gatk_haplotype_caller_make_gvcf = true
+params.gatk_haplotype_caller_make_bamout = true
 
 params.memory = '4'
-params.gatk_java_opts = ''
+params.gatk_haplotype_caller_java_opts = ''
 
 process GATK_HAPLOTYPE_CALLER {
     container = "broadinstitute/gatk:4.1.8.1"
@@ -36,7 +36,7 @@ process GATK_HAPLOTYPE_CALLER {
     """
     set -e
 
-    /gatk/gatk --java-options "-Xmx${params.memory}G ${params.gatk_java_opts}" \
+    /gatk/gatk --java-options "-Xmx${params.memory}G ${params.gatk_haplotype_caller_java_opts}" \
           HaplotypeCaller \
           -R ${ref_fasta} \
           -I ${input_bam} \
@@ -56,14 +56,17 @@ process GATK_HAPLOTYPE_CALLER {
 workflow test {
 
 
-    ref_fasta_ch = Channel.value([Paths.get("./test_data/Homo_sapiens_assembly38.fasta"), Paths.get("./test_data/Homo_sapiens_assembly38.fasta.fai")])
+    ref_fasta_ch = Channel.value([Paths.get("${baseDir}/test_data/Homo_sapiens_assembly38.fasta"),
+                                  Paths.get("${baseDir}/test_data/Homo_sapiens_assembly38.fasta.fai")])
 
-    ref_dict_ch = Channel.value(Paths.get("./test_data/Homo_sapiens_assembly38.dict"))
+    ref_dict_ch = Channel.value(Paths.get("${baseDir}/test_data/Homo_sapiens_assembly38.dict"))
 
     input_bam_ch = Channel.fromPath(["${baseDir}/test_data/*.bam",
                                      "${baseDir}/test_data/*.bai"]).buffer(size: 2)
 
-    interval_list_ch = Channel.value(Paths.get("./test_data/test-intervals.hg38.list"))
+    interval_list_ch = Channel.value(Paths.get("${baseDir}/test_data/test-intervals.hg38.list"))
+
+
 
     GATK_HAPLOTYPE_CALLER(
             ref_fasta_ch,
