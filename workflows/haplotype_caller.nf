@@ -1,3 +1,5 @@
+import java.nio.file.Paths
+
 nextflow.enable.dsl = 2
 
 include { SAMTOOLS_CRAM_TO_BAM } from "../modules/samtools/cram_to_bam/cram_to_bam"
@@ -5,21 +7,49 @@ include { GATK_HAPLOTYPE_CALLER } from "../modules/gatk/haplotype_caller/haploty
 include { GATK_MERGE_GVCFS } from "../modules/gatk/merge_gvcfs/merge_gvcfs"
 
 
-params.deeptools_bamcompare_opts = ["--binsize 50"]
-params.grch38_blood_vs_cfDNA = "$baseDir/test_data/features/GRCh38.blood.vs.cfDNA.v1.bed"
+make_gvcf = true
+make_bamout = true
 
+def is_cram(input_bam_path) {
+    return file(input_bam_path).getExtension() == "cram"
+}
 
-bam_readcount_I_features_ch = Channel.fromPath([params.grch38_blood_vs_cfDNA,
-                                                params.H110TM180403])
+def get_sample_basename(input_bam_path) {
+    if (is_cram(input_bam_path)) {
+        sample_basename = file(input_bam_path).getBaseName() + ".cram"
+    } else {
+        sample_basename = file(input_bam_path).getBaseName() + ".bam"
+    }
 
+    return sample_basename
+}
+
+def vcf_basename = get_sample_basename
+
+def output_suffix = make_gvcf ? ".g.vcf.gz" : ".vcf.gz"
+
+def output_filename = vcf_basename + output_suffix
 
 workflow {
     take:
-    bam_readcount_I_features_ch
+
+    ref_fasta_ch = Channel.value([Paths.get("${baseDir}/../test_data/Homo_sapiens_assembly38.fasta"),
+                                  Paths.get("${baseDir}/../test_data/Homo_sapiens_assembly38.fasta.fai")])
+
+    ref_dict_ch = Channel.value(Paths.get("${baseDir}/../test_data/Homo_sapiens_assembly38.dict"))
+
+
+    input_bam_ch = Channel.fromPath(["${baseDir}/../test_data/*.bam",
+                                     "${baseDir}/../test_data/*.bai"]).buffer(size: 2)
 
     main:
-    SAMTOOLS_CRAM_TO_BAM
-    GATK_HAPLOTYPE_CALLER
-    GATK_MERGE_GVCFS
+    SAMTOOLS_CRAM_TO_BAM(
+            ref_fasta_ch,
+            ref_dict_ch,
+            input_cram_ch
+    )
+
+//    GATK_HAPLOTYPE_CALLER
+//    GATK_MERGE_GVCFS
 
 }
