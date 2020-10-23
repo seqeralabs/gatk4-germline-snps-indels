@@ -1,6 +1,7 @@
 nextflow.enable.dsl = 2
 
 process GATK_COLLECT_VARIANT_CALLING_METRICS {
+    container "us.gcr.io/broad-gatk/gatk:4.1.1.0"
 
     input:
     path(input_vcf)

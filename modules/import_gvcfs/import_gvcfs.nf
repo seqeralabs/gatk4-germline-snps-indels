@@ -32,15 +32,14 @@ process GATK_IMPORT_GVCFS {
     # Also, testing has shown that the multithreaded reader initialization
     # does not scale well beyond 5 threads, so don't increase beyond that.
 
-    gatk --java-options -Xms8g \
-                        GenomicsDBImport \
-                        --genomicsdb-workspace-path ${params.workspace_dir_name} \
-                        --batch-size ${params.batch_size} \
-                        -L ${interval} \
-                        --sample-name-map ${params.sample_name_map} \
-                        --reader-threads 5 \
-                        --merge-input-intervals \
-                        --consolidate
+    gatk --java-options -Xms8g GenomicsDBImport \
+                               --genomicsdb-workspace-path ${params.workspace_dir_name} \
+                               --batch-size ${params.batch_size} \
+                               -L ${interval} \
+                               --sample-name-map ${params.sample_name_map} \
+                               --reader-threads 5 \
+                               --merge-input-intervals \
+                               --consolidate
 
     tar -cf ${params.workspace_dir_name}.tar ${params.workspace_dir_name}
     """

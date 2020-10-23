@@ -3,6 +3,7 @@ nextflow.enable.dsl = 2
 params.base_output_name
 
 process GATK_SELECT_FINGERPRINT_SITE_VARIANTS {
+    container "us.gcr.io/broad-gatk/gatk:4.1.1.0"
 
     input:
     path(input_vcf)
