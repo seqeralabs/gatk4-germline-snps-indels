@@ -11,7 +11,7 @@ params.gatk_haplotype_caller_memory = '4'
 params.gatk_haplotype_caller_java_opts = "-XX:GCTimeLimit=50 -XX:GCHeapFreeLimit=10"
 
 process GATK_HAPLOTYPE_CALLER {
-    container = "broadinstitute/gatk:4.1.8.1"
+    container "broadinstitute/gatk:4.1.8.1"
     memory "${params.gatk_haplotype_caller_memory}GB"
 
 
