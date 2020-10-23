@@ -6,6 +6,7 @@ params.tranches_filename
 params.use_allele_specific_annotations
 
 process GATK_SNPS_VARIANT_RECALIBRATOR_CREATE_MODEL {
+    container "us.gcr.io/broad-gatk/gatk:4.1.1.0"
 
     input:
     path(sites_only_variant_filtered_vcf)

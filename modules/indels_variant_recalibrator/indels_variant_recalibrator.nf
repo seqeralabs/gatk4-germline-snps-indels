@@ -7,6 +7,7 @@ params.use_allele_specific_annotations
 
 
 process GATK_INDELS_VARIANT_RECALIBRATOR {
+    container "us.gcr.io/broad-gatk/gatk:4.1.1.0"
 
     input:
     path(sites_only_variant_filtered_vcf)
