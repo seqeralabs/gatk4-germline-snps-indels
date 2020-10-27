@@ -3,15 +3,15 @@ nextflow.enable.dsl = 2
 import java.nio.file.Paths
 
 
-params.gatk_haplotype_caller_contamination = 0
-params.make_gvcf = true
-params.make_bamout = true
-
-params.gatk_haplotype_caller_memory = '4'
-params.gatk_haplotype_caller_java_opts = "-XX:GCTimeLimit=50 -XX:GCHeapFreeLimit=10"
+params.contamination = 0
+params.make_gvcf = false
+params.make_bamout = false
+params.memory = '4'
+params.java_opts = "-XX:GCTimeLimit=50 -XX:GCHeapFreeLimit=10"
+params.container = "broadinstitute/gatk:4.1.8.1"
 
 process GATK_HAPLOTYPE_CALLER {
-    container "broadinstitute/gatk:4.1.8.1"
+    container params.container
     memory "${params.gatk_haplotype_caller_memory}GB"
 
 

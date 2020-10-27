@@ -2,10 +2,10 @@ nextflow.enable.dsl = 2
 
 params.make_gvcf = false
 params.gatk_merge_gvcfs_memory = '10'
-
+params.container = "broadinstitute/gatk:4.1.8.1"
 
 process GATK_MERGE_GVCFS {
-    container = "broadinstitute/gatk:4.1.8.1"
+    container params.container
     memory "${params.gatk_merge_gvcfs_memory}GB"
 
     input:

@@ -4,8 +4,11 @@ import java.nio.file.Paths
 
 params.samtools_cram_to_bam_memory = '4'
 
+
+params.container = "broadinstitute/genomes-in-the-cloud:2.3.1-1500064817"
+
 process SAMTOOLS_CRAM_TO_BAM {
-    container = "broadinstitute/genomes-in-the-cloud:2.3.1-1500064817"
+    container = params.container
     memory "${params.samtools_cram_to_bam_memory}GB"
 
     input:
