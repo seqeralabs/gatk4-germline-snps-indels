@@ -13,7 +13,7 @@ params.make_bamout = false
 
 process GATK_HAPLOTYPE_CALLER {
     container params.container
-    memory "${params.gatk_haplotype_caller_memory}GB"
+    memory "${params.memory}GB"
 
 
     input:
@@ -36,19 +36,19 @@ process GATK_HAPLOTYPE_CALLER {
     """
     set -e
 
-    /gatk/gatk --java-options "-Xmx${params.gatk_haplotype_caller_memory}G ${params.gatk_haplotype_caller_java_opts}" \
+    ${params.tool_path} --java-options "-Xmx${params.memory}G ${params.java_opts}" \
           HaplotypeCaller \
           -R ${ref_fasta} \
           -I ${input_bam} \
           -O ${output_vcf} \
-          -contamination ${params.gatk_haplotype_caller_contamination} \
+          -contamination ${params.contamination} \
           ${params.make_gvcf ? "-G AS_StandardAnnotation" : ""} \
           -GQB 10 -GQB 20 -GQB 30 -GQB 40 -GQB 50 -GQB 60 -GQB 70 -GQB 80 -GQB 90 \
           ${params.make_gvcf ? "-ERC GVCF" : ""} \
           ${bamout_arg}
     """
 
-
+// FIXME
 //    -L ${interval_list} \
 }
 
@@ -60,7 +60,7 @@ workflow test {
     params.ref_fasta_fai_file = "${baseDir}/test_data/Homo_sapiens_assembly38.fasta.fai"
     params.ref_dict_file = "${baseDir}/test_data/Homo_sapiens_assembly38.dict"
     params.bam_file_pattern = "${baseDir}/test_data/*bam*"
-    params.interval_list = "${baseDir}/test_data/test-intervals.hg38.list"
+    params.interval_list_file = "${baseDir}/test_data/test-intervals.hg38.list"
 
 
     ref_fasta_ch = Channel.value([Paths.get(params.ref_fasta_file),
@@ -70,7 +70,7 @@ workflow test {
 
     input_bam_ch = Channel.fromPath(params.bam_file_pattern).toSortedList().flatten().collate(2)
 
-    interval_list_ch = Channel.value(Paths.get())
+    interval_list_ch = Channel.value(Paths.get(params.interval_list_file))
 
 
     GATK_HAPLOTYPE_CALLER(

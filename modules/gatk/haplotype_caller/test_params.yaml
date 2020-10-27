@@ -9,9 +9,9 @@ java_opts:
 contamination:
   0
 make_gvcf:
-  false
+  true
 make_bamout:
-  false
+  true
 ref_fasta_file:
   "${baseDir}/test_data/Homo_sapiens_assembly38.fasta"
 ref_fasta_fai_file:
@@ -20,6 +20,6 @@ ref_dict_file:
   "${baseDir}/test_data/Homo_sapiens_assembly38.dict"
 bam_file_pattern:
   "${baseDir}/test_data/*bam*"
-interval_list:
+interval_list_file:
   "${baseDir}/test_data/test-intervals.hg38.list"
 
