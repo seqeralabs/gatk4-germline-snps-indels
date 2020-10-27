@@ -2,13 +2,14 @@ nextflow.enable.dsl = 2
 
 import java.nio.file.Paths
 
+params.container = "broadinstitute/gatk:4.1.8.1"
+params.tool_path = "/gatk/gatk"
+params.memory = '4'
+params.java_opts = "-XX:GCTimeLimit=50 -XX:GCHeapFreeLimit=10"
 
 params.contamination = 0
 params.make_gvcf = false
 params.make_bamout = false
-params.memory = '4'
-params.java_opts = "-XX:GCTimeLimit=50 -XX:GCHeapFreeLimit=10"
-params.container = "broadinstitute/gatk:4.1.8.1"
 
 process GATK_HAPLOTYPE_CALLER {
     container params.container
@@ -55,15 +56,21 @@ process GATK_HAPLOTYPE_CALLER {
 workflow test {
 
 
-    ref_fasta_ch = Channel.value([Paths.get("${baseDir}/test_data/Homo_sapiens_assembly38.fasta"),
-                                  Paths.get("${baseDir}/test_data/Homo_sapiens_assembly38.fasta.fai")])
+    params.ref_fasta_file = "${baseDir}/test_data/Homo_sapiens_assembly38.fasta"
+    params.ref_fasta_fai_file = "${baseDir}/test_data/Homo_sapiens_assembly38.fasta.fai"
+    params.ref_dict_file = "${baseDir}/test_data/Homo_sapiens_assembly38.dict"
+    params.bam_file_pattern = "${baseDir}/test_data/*bam*"
+    params.interval_list = "${baseDir}/test_data/test-intervals.hg38.list"
 
-    ref_dict_ch = Channel.value(Paths.get("${baseDir}/test_data/Homo_sapiens_assembly38.dict"))
 
-    input_bam_ch = Channel.fromPath("${baseDir}/test_data/*bam*").toSortedList().flatten().collate(2)
+    ref_fasta_ch = Channel.value([Paths.get(params.ref_fasta_file),
+                                  Paths.get(params.ref_fasta_fai_file)])
 
-    interval_list_ch = Channel.value(Paths.get("${baseDir}/test_data/test-intervals.hg38.list"))
+    ref_dict_ch = Channel.value(Paths.get(params.ref_dict_file))
 
+    input_bam_ch = Channel.fromPath(params.bam_file_pattern).toSortedList().flatten().collate(2)
+
+    interval_list_ch = Channel.value(Paths.get())
 
 
     GATK_HAPLOTYPE_CALLER(

@@ -1,0 +1,20 @@
+tool_path:
+  "samtools"
+
+memory:
+  '10'
+
+container:
+  "broadinstitute/genomes-in-the-cloud:2.3.1-1500064817"
+
+ref_fasta_file:
+  "${baseDir}/test_data/Homo_sapiens_assembly38.fasta"
+
+ref_fasta_fai_file:
+  "${baseDir}/test_data/Homo_sapiens_assembly38.fasta.fai"
+
+ref_dict_file:
+  "${baseDir}/test_data/Homo_sapiens_assembly38.dict"
+
+cram_file_pattern:
+  "${baseDir}/test_data/*cram"

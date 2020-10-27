@@ -1,12 +1,13 @@
 nextflow.enable.dsl = 2
 
 params.make_gvcf = false
-params.gatk_merge_gvcfs_memory = '10'
+params.memory = '10'
 params.container = "broadinstitute/gatk:4.1.8.1"
+params.tool_path = "/gatk/gatk"
 
 process GATK_MERGE_GVCFS {
     container params.container
-    memory "${params.gatk_merge_gvcfs_memory}GB"
+    memory "${params.memory}GB"
 
     input:
     path(input_vcf)
@@ -28,7 +29,7 @@ process GATK_MERGE_GVCFS {
     """
     set -e
 
-    /gatk/gatk --java-options "-Xmx${params.gatk_merge_gvcfs_memory}G"  \
+    ${params.tool_path} --java-options "-Xmx${params.memory}G"  \
                               MergeVcfs \
                              --INPUT ${input_str} \
                              --OUTPUT ${output_filename}
@@ -38,7 +39,10 @@ process GATK_MERGE_GVCFS {
 
 
 workflow test {
-    input_vcf_ch = Channel.fromPath("${baseDir}/test_data/*vcf*").collect()
+
+    params.vcf_file_pattern = "${baseDir}/test_data/*vcf*"
+   
+    input_vcf_ch = Channel.fromPath(params.vcf_file_pattern).collect()
 
     GATK_MERGE_GVCFS(input_vcf_ch)
 
