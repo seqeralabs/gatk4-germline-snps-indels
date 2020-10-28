@@ -4,10 +4,8 @@ params.container = "broadinstitute/gatk:4.1.8.1"
 params.gatk_path = "/gatk/gatk"
 params.memory = '16'
 params.cpus = 16
-// FIXME
-params.java_opts = "-XX:GCTimeLimit=50 -XX:GCHeapFreeLimit=10"
-// FIXME
-params.compression_level
+params.java_opts = ""
+params.compression_level = 5
 
 process GATK_MERGE_BAM_ALIGNMENT {
     tag "${sampleId}"
@@ -33,8 +31,6 @@ process GATK_MERGE_BAM_ALIGNMENT {
     path "*.mapped.merged.bam"
 
     script:
-    // DRY: Move this to config or params file
-    gatk_path = "/gatk/gatk"
     bwa_commandline = "bwa mem -K 100000000 -p -v 3 -t 8 -Y ${ref_fasta}"
 
     """

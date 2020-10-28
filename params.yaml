@@ -1,0 +1,18 @@
+unmapped_bams_list:
+  "s3://nf-work-bucket/unmapped_bams_3.tsv"
+outdir:
+  "s3://nf-work-bucket/results/M5-6-samples"
+fasta:
+  "s3://broad-references/hg38/v0/Homo_sapiens_assembly38.fasta"
+dbSNP_vcf:
+  "s3://broad-references/hg38/v0/Homo_sapiens_assembly38.dbsnp138.vcf"
+known_indels_mills:
+  "s3://broad-references/hg38/v0/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz"
+known_indels_dbSNP:
+  "s3://broad-references/hg38/v0/Homo_sapiens_assembly38.known_indels.vcf.gz"
+sequence_grouping:
+  "s3://da-gatk-nf-dev/sequence_grouping.txt"
+sequence_grouping_unmapped:
+  "s3://da-gatk-nf-dev/sequence_grouping_with_unmapped.txt"
+scattered_calling_interval:
+  "s3://da-gatk-nf-dev/hg38_wgs_scattered_calling_intervals.txt"

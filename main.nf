@@ -1,40 +1,11 @@
 nextflow.enable.dsl = 2
 
-//--------------
 
-
-java_opt_samtofastq = "-Xms3000m"
-java_opt_mergebams = "-Xms6000m"
-java_opt_markdups = "-Xms4000m"
-java_opt_sort = "-Xms4000m"
-java_opt_fix = "-Xms500m"
-java_opt_baserecal = "-Xms4000m"
-java_opt_bqsrreport = "-Xms3000m"
-java_opt_applybqsr = "-Xms3000m"
-java_opt_gatherbams = "-Xms2000m"
-java_opt_haplotype = "-Xmx4G"
-java_opt_mergevcfs = "-Xmx4G"
-java_opt_genomicsDBimport = "-Xmx4G"
-
-
-compression_level = 5
-
-
-unmapped_bams_list = "s3://nf-work-bucket/unmapped_bams_3.tsv"
-outdir = "s3://nf-work-bucket/results/M5-6-samples"
-
-fasta = "s3://broad-references/hg38/v0/Homo_sapiens_assembly38.fasta"
-dbSNP_vcf = "s3://broad-references/hg38/v0/Homo_sapiens_assembly38.dbsnp138.vcf"
-known_indels_mills = "s3://broad-references/hg38/v0/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz"
-known_indels_dbSNP = "s3://broad-references/hg38/v0/Homo_sapiens_assembly38.known_indels.vcf.gz"
-sequence_grouping = "s3://da-gatk-nf-dev/sequence_grouping.txt"
-sequence_grouping_unmapped = "s3://da-gatk-nf-dev/sequence_grouping_with_unmapped.txt"
-scattered_calling_interval = "s3://da-gatk-nf-dev/hg38_wgs_scattered_calling_intervals.txt"
-
-//--------------
+//================================================================================
+// Read and derive file names and location from the params.yaml
+//================================================================================
 
 unmapped_bams = file(params.unmapped_bams_list)
-
 ref_fasta = file(params.fasta)
 ref_alt = file("${params.fasta}.64.alt")
 ref_amb = file("${params.fasta}.64.amb")
@@ -54,19 +25,94 @@ sequence_grouping = file(params.sequence_grouping)
 sequence_grouping_unmapped = file(params.sequence_grouping_unmapped)
 scattered_calling_interval = file(params.scattered_calling_interval)
 
-include { GATK_APPLY_BQSR } from "../modules/gatk/apply_bqsr/apply_bqsr.nf"
-include { GATK_BASE_RECALIBRATOR } from "../modules/gatk/base_recalibrator/base_recalibrator.nf"
-include { GATK_GATHER_BAM_FILES } from "../modules/gatk/gather_bam_files/gather_bam_files.nf"
-include { GATK_GATHER_BQSR_REPORTS } from "../modules/gatk/gather_bqsr_reports/gather_bqsr_reports.nf"
-include { GATK_HAPLOTYPE_CALLER } from "../modules/gatk/haplotype_caller/haplotype_caller.nf"
-include { GATK_MARK_DUPLICATES } from "../modules/gatk/mark_duplicates/mark_duplicates.nf"
-include { GATK_MERGE_BAM_ALIGNMENT } from "../modules/gatk/merge_bam_alignment/merge_bam_alignment.nf"
-include { GATK_MERGE_VCFS } from "../modules/gatk/merge_vcfs/merge_vcfs.nf"
-include { GATK_SORT_AND_FIX_TAGS } from "../modules/gatk/sort_and_fix_tags/sort_and_fix_tags.nf"
-include { PICARD_SAM_TO_FASTQ_BWA_MEM } from "../modules/picard/sam_to_fastq_bwa_mem/sam_to_fastq_bwa_mem.nf"
-include { UTILS_CREATE_SEQUENCE_GROUPING } from "../modules/utils/create_sequence_grouping/create_sequence_grouping.nf"
-include { UTILS_GET_BWA_VERSION } from "../modules/utils/get_bwa_version/get_bwa_version.nf"
+//================================================================================
+// Include modules and (soft) override module-level parameters
+//================================================================================
 
+params.GATK_APPLY_BQSR = [
+        java_opts: "-Xms3000m"
+]
+include { GATK_APPLY_BQSR } from "../modules/gatk/apply_bqsr/apply_bqsr.nf" addParams(*: params.GATK_APPLY_BQSR)
+
+//------------------
+
+params.GATK_BASE_RECALIBRATOR = [
+        java_opts: "-Xms4000m"
+]
+include { GATK_BASE_RECALIBRATOR } from "../modules/gatk/base_recalibrator/base_recalibrator.nf" addParams(*: params.GATK_BASE_RECALIBRATOR)
+
+//------------------
+params.GATK_GATHER_BAM_FILES = [
+        java_opts        : "-Xms2000m",
+        compression_level: 5
+]
+include { GATK_GATHER_BAM_FILES } from "../modules/gatk/gather_bam_files/gather_bam_files.nf" addParams(*: params.GATK_GATHER_BAM_FILES)
+
+//------------------
+params.GATK_GATHER_BQSR_REPORTS = [
+        java_opts: "-Xms3000m"
+]
+include { GATK_GATHER_BQSR_REPORTS } from "../modules/gatk/gather_bqsr_reports/gather_bqsr_reports.nf" addParams(*: params.GATK_GATHER_BQSR_REPORTS)
+
+//------------------
+params.GATK_GENOMICS_DB_IMPORT = [
+        java_opts: "-Xmx4G"
+]
+include { GATK_GENOMICS_DB_IMPORT } from "../modules/gatk/genomics_db_import/genomics_db_import.nf" addParams(*: params.GATK_GENOMICS_DB_IMPORT)
+
+//------------------
+params.GATK_HAPLOTYPE_CALLER = [
+        java_opts: "-Xmx4G"
+]
+include { GATK_HAPLOTYPE_CALLER } from "../modules/gatk/haplotype_caller/haplotype_caller.nf" addParams(*: params.GATK_HAPLOTYPE_CALLER)
+
+//------------------
+params.GATK_MARK_DUPLICATES = [
+        java_opts        : "-Xms4000m",
+        compression_level: 5
+]
+include { GATK_MARK_DUPLICATES } from "../modules/gatk/mark_duplicates/mark_duplicates.nf" addParams(*: params.GATK_MARK_DUPLICATES)
+
+//------------------
+params.GATK_MERGE_BAM_ALIGNMENT = [
+        java_opts        : "-Xms6000m",
+        compression_level: 5
+]
+include { GATK_MERGE_BAM_ALIGNMENT } from "../modules/gatk/merge_bam_alignment/merge_bam_alignment.nf" addParams(*: params.GATK_MERGE_BAM_ALIGNMENT)
+
+//------------------
+params.GATK_MERGE_VCFS = [
+        java_opts: "-Xmx4G"
+]
+include { GATK_MERGE_VCFS } from "../modules/gatk/merge_vcfs/merge_vcfs.nf" addParams(*: params.GATK_MERGE_VCFS)
+
+//------------------
+params.GATK_SORT_AND_FIX_TAGS = [
+        java_opts_sort   : "-Xms4000m",
+        java_opts_fix    : "-Xms500m",
+        compression_level: 5
+]
+include { GATK_SORT_AND_FIX_TAGS } from "../modules/gatk/sort_and_fix_tags/sort_and_fix_tags.nf" addParams(*: params.GATK_SORT_AND_FIX_TAGS)
+
+//------------------
+params.PICARD_SAM_TO_FASTQ_BWA_MEM = [
+        java_opts        : "-Xms3000m",
+        compression_level: 5
+]
+include { PICARD_SAM_TO_FASTQ_BWA_MEM } from "../modules/picard/sam_to_fastq_bwa_mem/sam_to_fastq_bwa_mem.nf" addParams(*: params.PICARD_SAM_TO_FASTQ_BWA_MEM)
+
+//------------------
+params.UTILS_CREATE_SEQUENCE_GROUPING = []
+include { UTILS_CREATE_SEQUENCE_GROUPING } from "../modules/utils/create_sequence_grouping/create_sequence_grouping.nf" addParams(*: params.UTILS_CREATE_SEQUENCE_GROUPING)
+
+//------------------
+params.UTILS_GET_BWA_VERSION = []
+include { UTILS_GET_BWA_VERSION } from "../modules/utils/get_bwa_version/get_bwa_version.nf" addParams(*: params.UTILS_GET_BWA_VERSION)
+
+
+//================================================================================
+// Prepare channels
+//================================================================================
 
 /*
 
@@ -108,115 +154,141 @@ calling_intervals = channel.fromPath(scattered_calling_interval)
         }
 
 
-/*
-*
-################################################ EXECUTION #############################################################
-*
-*/
+//================================================================================
+// Define sub-workflows
+//================================================================================
 
-workflow preprocessing_mapping {
+workflow PREPROCESSING_MAPPING {
     take:
     data
 
     main:
-    samToFastqBwaMem(data, ref_alt, ref_amb, ref_ann, ref_bwt, ref_pac, ref_sa, ref_dict, ref_fasta, ref_fasta_fai)
+    PICARD_SAM_TO_FASTQ_BWA_MEM(
+            data,
+            ref_alt,
+            ref_amb,
+            ref_ann,
+            ref_bwt,
+            ref_pac,
+            ref_sa,
+            ref_dict,
+            ref_fasta,
+            ref_fasta_fai
+    )
 
-    bwa_version = getBwaVersion()
+    bwa_version = UTILS_GET_BWA_VERSION()
 
-    mergeBamAlignment(
-            samToFastqBwaMem.out[0],
-            samToFastqBwaMem.out[1],
-            samToFastqBwaMem.out[2],
+    GATK_MERGE_BAM_ALIGNMENT(
+            PICARD_SAM_TO_FASTQ_BWA_MEM.out[0],
+            PICARD_SAM_TO_FASTQ_BWA_MEM.out[1],
+            PICARD_SAM_TO_FASTQ_BWA_MEM.out[2],
             ref_dict,
             ref_fasta,
             ref_fasta_fai,
             bwa_version
     )
 
-    markDuplicates(mergeBamAlignment.out[0], mergeBamAlignment.out[1])
 
-    sortAndFixTags(markDuplicates.out[0], markDuplicates.out[1], ref_dict, ref_fasta, ref_fasta_fai)
+    GATK_MARK_DUPLICATES(
+            GATK_MERGE_BAM_ALIGNMENT.out[0],
+            GATK_MERGE_BAM_ALIGNMENT.out[1]
+    )
+
+    GATK_SORT_AND_FIX_TAGS(
+            GATK_MARK_DUPLICATES.out[0],
+            GATK_MARK_DUPLICATES.out[1],
+            ref_dict,
+            ref_fasta,
+            ref_fasta_fai
+    )
 
     emit:
-    sortAndFixTags.out
+    GATK_SORT_AND_FIX_TAGS.out
 }
 
 
-workflow quality_recalibraiton {
+//------------------
+
+workflow QUALITY_RECALIBRATION {
     take:
     data
 
     main:
-    baseRecalibrator(
-            data.combine(subgrouping),         \
-                        ref_dict,           \
-                        ref_fasta,          \
-                        ref_fasta_fai,          \
-                        dbSNP_vcf,          \
-                        dbSNP_vcf_index,            \
-                        known_indels_mills,         \
-                        known_indels_mills_index,           \
-                        known_indels_dbSNP,             \
-                        known_indels_dbSNP_index           \
-        )
+    GATK_BASE_RECALIBRATOR(
+            data.combine(subgrouping),
+            ref_dict,
+            ref_fasta,
+            ref_fasta_fai,
+            dbSNP_vcf,
+            dbSNP_vcf_index,
+            known_indels_mills,
+            known_indels_mills_index,
+            known_indels_dbSNP,
+            known_indels_dbSNP_index
+    )
 
-    gatherBqsrReports(
-            baseRecalibrator.out.groupTuple()
+    GATK_GATHER_BQSR_REPORTS(
+            GATK_BASE_RECALIBRATOR.out.groupTuple()
     )
 
 
-    applyBQSR(
-            data.join(gatherBqsrReports.out).combine(subgrouping_unmapped),         \
-                        ref_dict,           \
-                        ref_fasta,          \
-                        ref_fasta_fai          \
-        )
+    GATK_APPLY_BQSR(
+            data.join(GATK_GATHER_BQSR_REPORTS.out).combine(subgrouping_unmapped),
+            ref_dict,
+            ref_fasta,
+            ref_fasta_fai
+    )
 
-    gatherBamFiles(
-            applyBQSR.out.groupTuple()
+    GATK_GATHER_BAM_FILES(
+            GATK_APPLY_BQSR.out.groupTuple()
     )
 
     emit:
-    gatherBamFiles.out
+    GATK_GATHER_BAM_FILES.out
 
 }
 
 
-workflow variant_discovery {
+//------------------
+
+workflow VARIANT_DISCOVERY {
     take:
     data
 
     main:
-
-    haplotypeCaller(
-            data.combine(calling_intervals),         \
-                        ref_dict,           \
-                        ref_fasta,          \
-                        ref_fasta_fai         \
-        )
-
-    mergeVCFs(
-            haplotypeCaller.out.groupTuple()
+    GATK_HAPLOTYPE_CALLER(
+            data.combine(calling_intervals),
+            ref_dict,
+            ref_fasta,
+            ref_fasta_fai
     )
+
+    GATK_MERGE_VCFS(
+            GATK_HAPLOTYPE_CALLER.out.groupTuple()
+    )
+
     emit:
-    mergeVCFs.out
+    GATK_MERGE_VCFS.out
 
 
 }
 
+//================================================================================
+// Main workflow
+//================================================================================
 
 workflow {
 
-    preprocessing_mapping(unmapped_bams_channel)
+    PREPROCESSING_MAPPING(unmapped_bams_channel)
 
-    quality_recalibraiton(preprocessing_mapping.out)
+    QUALITY_RECALIBRATION(preprocessing_mapping.out)
 
-    variant_discovery(quality_recalibraiton.out)
+    VARIANT_DISCOVERY(QUALITY_RECALIBRATION.out)
 
-    variant_discovery.out.map {
-        sampleId, vcfFile ->
-            "${sampleId}\ts3://${vcfFile}"
-    }
+    VARIANT_DISCOVERY.out
+            .map {
+                sampleId, vcfFile -> "${sampleId}\ts3://${vcfFile}"
+            }
             .collectFile(
                     name: 'merged_vcfs.tsv', newLine: true, storeDir: "${params.outdir}"
             )
