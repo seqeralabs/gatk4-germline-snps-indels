@@ -1,17 +1,22 @@
-process GET_BWA_VERSION {
+nextflow.enable.dsl = 2
+
+params.container = "broadinstitute/genomes-in-the-cloud:2.3.1-1512499786"
+params.gitc_path = "/usr/gitc"
+
+
+process UTILS_GET_BWA_VERSION {
     tag "BWA version"
 
-    container "broadinstitute/genomes-in-the-cloud:2.3.1-1512499786"
+    container params.container
 
     output:
     stdout
 
     script:
 
-    bwa_path = "/usr/gitc"
     """
 
-    ${bwa_path}/bwa 2>&1  \
+    ${params.gitc_path}/bwa 2>&1  \
     | grep -e '^Version'  \
     | sed 's/Version: //' \
     | tr -d '\n'

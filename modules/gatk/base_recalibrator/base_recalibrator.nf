@@ -1,11 +1,19 @@
+nextflow.enable.dsl = 2
 
-process baseRecalibrator {
+params.container = "broadinstitute/gatk:4.1.8.1"
+params.gatk_path = "/gatk/gatk"
+params.memory = '16'
+params.cpus = 16
+// FIXME
+params.java_opts = "-XX:GCTimeLimit=50 -XX:GCHeapFreeLimit=10"
+
+
+process GATK_BASE_RECALIBRATOR {
     tag "${sampleId}_${subgroup_name}"
 
-    memory '16 GB'
-    cpus 16
-
-    container "broadinstitute/gatk:4.1.8.1"
+    container params.container
+    memory "${params.memory} GB"
+    cpus params.cpus
 
     input:
     tuple val(sampleId),
@@ -31,19 +39,18 @@ process baseRecalibrator {
             path("${sampleId}_recalibration_report_${subgroup_name}.recal_data.csv")
 
     script:
-    gatk_path = "/gatk/gatk"
     subgroup_trimmed = subgroup.trim().split("\t").join(" -L ")
 
     """
-    ${gatk_path} --java-options ${params.java_opt_baserecal} \
-    BaseRecalibrator \
-    -R ${ref_fasta} \
-    -I ${input_mapped_merged_marked_sorted_bam} \
-    --use-original-qualities \
-    -O "${sampleId}_recalibration_report_${subgroup_name}.recal_data.csv" \
-    --known-sites ${dbSNP_vcf} \
-    --known-sites ${known_indels_mills} \
-    --known-sites ${known_indels_dbSNP} \
-    -L ${subgroup_trimmed}
+    ${params.gatk_path} --java-options ${params.java_opts} \
+                 BaseRecalibrator \
+                 -R ${ref_fasta} \
+                 -I ${input_mapped_merged_marked_sorted_bam} \
+                 --use-original-qualities \
+                 -O "${sampleId}_recalibration_report_${subgroup_name}.recal_data.csv" \
+                --known-sites ${dbSNP_vcf} \
+                --known-sites ${known_indels_mills} \
+                --known-sites ${known_indels_dbSNP} \
+                -L ${subgroup_trimmed}
     """
 }

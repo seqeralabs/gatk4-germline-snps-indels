@@ -1,11 +1,20 @@
+nextflow.enable.dsl = 2
 
-process applyBQSR {
+params.container = "broadinstitute/gatk:4.1.8.1"
+params.gatk_path = "/gatk/gatk"
+params.memory = '16'
+params.cpus = 16
+// FIXME
+params.java_opts = "-XX:GCTimeLimit=50 -XX:GCHeapFreeLimit=10"
+
+
+process GATK_APPLY_BQSR {
     tag "${sampleId}_${subgroup_unmapped_name}"
 
-    memory '16 GB'
-    cpus 16
+    container params.container
+    memory "${params.memory} GB"
+    cpus params.cpus
 
-    container "broadinstitute/gatk:4.1.8.1"
 
     input:
     tuple val(sampleId),
@@ -28,20 +37,19 @@ process applyBQSR {
 
     script:
 
-    gatk_path = "/gatk/gatk"
     subgroup_unmapped_trimmed = subgroup_unmapped.trim().split("\t").join(" -L ")
 
     """
-    ${gatk_path} --java-options "${params.java_opt_applybqsr}" \
-    ApplyBQSR \
-    -R ${ref_fasta}  \
-    -I ${input_mapped_merged_marked_sorted_bam}  \
-    -O "${sampleId}.${scatter_id.toString().padLeft(2, '0')}.${subgroup_unmapped_name}.recal.bam"  \
-    -L ${subgroup_unmapped_trimmed} \
-    -bqsr ${input_merged_bqsr_report} \
-    --static-quantized-quals 10 --static-quantized-quals 20 --static-quantized-quals 30 \
-    --add-output-sam-program-record \
-    --create-output-bam-md5 \
-    --use-original-qualities
+    ${params.gatk_path} --java-options "${params.java_opts}" \
+                        ApplyBQSR \
+                        -R ${ref_fasta}  \
+                        -I ${input_mapped_merged_marked_sorted_bam}  \
+                        -O "${sampleId}.${scatter_id.toString().padLeft(2, '0')}.${subgroup_unmapped_name}.recal.bam"  \
+                        -L ${subgroup_unmapped_trimmed} \
+                        -bqsr ${input_merged_bqsr_report} \
+                        --static-quantized-quals 10 --static-quantized-quals 20 --static-quantized-quals 30 \
+                        --add-output-sam-program-record \
+                        --create-output-bam-md5 \
+                        --use-original-qualities
     """
 }

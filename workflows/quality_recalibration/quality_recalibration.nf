@@ -1,14 +1,15 @@
-workflow quality_recalibration {
-    take: data
+workflow QUALITY_RECALIBRATION {
+    take:
+    data
 
     main:
     baseRecalibrator(
-            data.combine(subgrouping), \
-                ref_dict,   \
-                ref_fasta,  \
-                ref_fasta_fai,  \
-                dbSNP_vcf,  \
-                dbSNP_vcf_index,    \
+            data.combine(subgrouping),  \
+                 ref_dict,    \
+                 ref_fasta,   \
+                 ref_fasta_fai,   \
+                 dbSNP_vcf,   \
+                 dbSNP_vcf_index,     \
                 known_indels_mills, \
                 known_indels_mills_index,   \
                 known_indels_dbSNP,     \

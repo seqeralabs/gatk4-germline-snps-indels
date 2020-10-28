@@ -1,4 +1,4 @@
-workflow preprocessing_mapping {
+workflow PREPROCESSING_MAPPING {
     take: data
 
     main:

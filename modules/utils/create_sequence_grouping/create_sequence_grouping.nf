@@ -1,10 +1,17 @@
-process createSequenceGrouping {
+nextflow.enable.dsl = 2
+
+params.container = "broadinstitute/genomes-in-the-cloud:2.3.1-1512499786"
+params.memory = '16'
+params.cpus = 16
+// FIXME
+params.java_opts = "-XX:GCTimeLimit=50 -XX:GCHeapFreeLimit=10"
+
+process UTILS_CREATE_SEQUENCE_GROUPING {
     tag { "Create sequence grouping" }
 
-    memory '16 GB'
-    cpus 16
-
-    container "broadinstitute/genomes-in-the-cloud:2.3.1-1512499786"
+    container params.container
+    memory "${params.memory} GB"
+    cpus params.cpus
 
     input:
     path(ref_dict)

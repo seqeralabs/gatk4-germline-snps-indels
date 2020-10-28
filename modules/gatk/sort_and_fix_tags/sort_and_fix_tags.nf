@@ -1,10 +1,23 @@
-process sortAndFixTags {
+nextflow.enable.dsl = 2
+
+params.container = "broadinstitute/gatk:4.1.8.1"
+params.gatk_path = "/gatk/gatk"
+params.memory = '16'
+params.cpus = 16
+// FIXME
+params.java_opts_sort = "-XX:GCTimeLimit=50 -XX:GCHeapFreeLimit=10"
+// FIXME
+params.java_opts_fix = "-XX:GCTimeLimit=50 -XX:GCHeapFreeLimit=10"
+// FIXME
+params.compression_level
+
+
+process GATK_SORT_AND_FIX_TAGS {
     tag "${sampleId}"
 
-    memory '16 GB'
-    cpus 16
-
-    container "broadinstitute/gatk:4.1.8.1"
+    container params.container
+    memory "${params.memory} GB"
+    cpus params.cpus
 
     input:
     val(sampleId)
@@ -22,25 +35,24 @@ process sortAndFixTags {
 
 
     script:
-    gatk_path = "/gatk/gatk"
 
     """
     set -o pipefail
 
-    ${gatk_path} --java-options "-Dsamjdk.compression_level=${params.compression_level} ${params.java_opt_sort}" \
-      SortSam \
-    --INPUT ${input_mapped_merged_marked_bam} \
-    --OUTPUT /dev/stdout \
-    --SORT_ORDER "coordinate" \
-    --CREATE_INDEX false \
-    --CREATE_MD5_FILE false \
+    ${params.gatk_path} --java-options "-Dsamjdk.compression_level=${params.compression_level} ${params.java_opts_sort}" \
+     SortSam \
+        --INPUT ${input_mapped_merged_marked_bam} \
+        --OUTPUT /dev/stdout \
+        --SORT_ORDER "coordinate" \
+        --CREATE_INDEX false \
+        --CREATE_MD5_FILE false \
     | \
-    ${gatk_path} --java-options "-Dsamjdk.compression_level=${params.compression_level} ${params.java_opt_fix}" \
+    ${params.gatk_path} --java-options "-Dsamjdk.compression_level=${params.compression_level} ${params.java_opts_fix}" \
     SetNmMdAndUqTags \
-    --INPUT /dev/stdin \
-    --OUTPUT ${sampleId}.mapped.merged.duplicate_marked.sorted.bam \
-    --CREATE_INDEX true \
-    --CREATE_MD5_FILE true \
-    --REFERENCE_SEQUENCE ${ref_fasta}
+        --INPUT /dev/stdin \
+        --OUTPUT ${sampleId}.mapped.merged.duplicate_marked.sorted.bam \
+        --CREATE_INDEX true \
+        --CREATE_MD5_FILE true \
+        --REFERENCE_SEQUENCE ${ref_fasta}
     """
 }

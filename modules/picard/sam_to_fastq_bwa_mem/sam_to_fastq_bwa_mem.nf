@@ -1,10 +1,18 @@
-process samToFastqBwaMem {
+nextflow.enable.dsl = 2
+
+params.container = "broadinstitute/genomes-in-the-cloud:2.3.1-1512499786"
+params.gitc_path = "/usr/gitc"
+params.memory = '16'
+params.cpus = 16
+// FIXME
+params.java_opts = "-XX:GCTimeLimit=50 -XX:GCHeapFreeLimit=10"
+
+process PICARD_SAM_TO_FASTQ_BWA_MEM {
     tag "${sampleId}"
 
-    memory '16 GB'
-    cpus 16
-
-    container "broadinstitute/genomes-in-the-cloud:2.3.1-1512499786"
+    container params.container
+    memory "${params.memory} GB"
+    cpus params.cpus
 
     input:
     tuple val(sampleId), path(input_unmapped_bam)
@@ -25,22 +33,20 @@ process samToFastqBwaMem {
     path(input_unmapped_bam)
 
     script:
-    script:
-    gotc_path = "/usr/gitc"
-    bwa_path = gotc_path
+
     """
     set -o pipefail
     set -e
 
-	java -Dsamjdk.compression_level=${params.compression_level} ${params.java_opt_samtofastq} \
-	    -jar ${gotc_path}/picard.jar \
+	java -Dsamjdk.compression_level=${params.compression_level} ${params.java_opts} \
+	    -jar ${params.gitc_path}/picard.jar \
         SamToFastq \
         INPUT=${input_unmapped_bam} \
         FASTQ=/dev/stdout \
         INTERLEAVE=true \
         NON_PF=true \
     | \
-		${bwa_path}/bwa mem \
+		${params.gitc_path}/bwa mem \
 		 -K 100000000 -p -v 3 -t 16 -Y ${ref_fasta} /dev/stdin -  2> >(tee ${sampleId}.bwa.stderr.log >&2) \
     | \
 		samtools view -1 - > ${sampleId}.mapped.bam
