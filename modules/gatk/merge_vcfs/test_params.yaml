@@ -1,0 +1,14 @@
+tool_path:
+  "/gatk/gatk"
+
+make_gvcf:
+  true
+
+memory:
+  '10'
+
+container:
+  "broadinstitute/gatk:4.1.8.1"
+
+vcf_file_pattern:
+  "${baseDir}/test_data/*vcf*"

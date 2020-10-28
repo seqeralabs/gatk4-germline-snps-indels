@@ -1,0 +1,36 @@
+container:
+  "broadinstitute/gatk:4.1.8.1"
+
+tool_path:
+  "/gatk/gatk"
+
+memory:
+  '4'
+
+java_opts:
+  "-XX:GCTimeLimit=50 -XX:GCHeapFreeLimit=10"
+
+contamination:
+  0
+
+make_gvcf:
+  true
+
+make_bamout:
+  true
+
+ref_fasta_file:
+  "${baseDir}/test_data/Homo_sapiens_assembly38.fasta"
+
+ref_fasta_fai_file:
+  "${baseDir}/test_data/Homo_sapiens_assembly38.fasta.fai"
+
+ref_dict_file:
+  "${baseDir}/test_data/Homo_sapiens_assembly38.dict"
+
+bam_file_pattern:
+  "${baseDir}/test_data/*bam*"
+
+interval_list_file:
+  "${baseDir}/test_data/test-intervals.hg38.list"
+
