@@ -54,11 +54,6 @@ params.GATK_GATHER_BQSR_REPORTS = [
 ]
 include { GATK_GATHER_BQSR_REPORTS } from "../modules/gatk/gather_bqsr_reports/gather_bqsr_reports.nf" addParams(*: params.GATK_GATHER_BQSR_REPORTS)
 
-//------------------
-params.GATK_GENOMICS_DB_IMPORT = [
-        java_opts: "-Xmx4G"
-]
-include { GATK_GENOMICS_DB_IMPORT } from "../modules/gatk/genomics_db_import/genomics_db_import.nf" addParams(*: params.GATK_GENOMICS_DB_IMPORT)
 
 //------------------
 params.GATK_HAPLOTYPE_CALLER = [
