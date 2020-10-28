@@ -1,0 +1,19 @@
+chr1:1+
+chr2:1+
+chr3:1+
+chr4:1+
+chr5:1+
+chr6:1+
+chr7:1+
+chr8:1+
+chr9:1+
+chr10:1+
+chr11:1+
+chr12:1+	chr13:1+
+chr14:1+	chr15:1+
+chr16:1+	chr17:1+
+chr18:1+	chr19:1+	chr20:1+
+chr21:1+	chr22:1+
+chrX:1+	chrY:1+	chrM:1+
+chr8_KI270810v1_alt:1+
+unmapped
