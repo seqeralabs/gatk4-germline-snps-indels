@@ -1,11 +1,19 @@
+nextflow.enable.dsl = 2
 
-process haplotypeCaller {
+params.container = "broadinstitute/gatk:4.1.8.1"
+params.gatk_path = "/gatk/gatk"
+params.memory = '16'
+params.cpus = 16
+params.java_opts = "-XX:GCTimeLimit=50 -XX:GCHeapFreeLimit=10"
+params.contamination = 0
+
+process GATK_HAPLOTYPE_CALLER {
     tag "${sampleId}_${interval_chunk_name}"
 
-    memory '16 GB'
-    cpus 16
+    container params.container
+    memory "${params.memory} GB"
+    cpus params.cpus
 
-    container "broadinstitute/gatk:4.1.8.1"
 
     input:
 
@@ -31,18 +39,17 @@ process haplotypeCaller {
 
     script:
 
-    gatk_path = "/gatk/gatk"
-
     """
     set -e
-    ${gatk_path} --java-options "${params.java_opt_haplotype}" \
-    HaplotypeCaller \
-    -R ${ref_fasta} \
-    -I ${input_recal_merged_bam} \
-    --output "${sampleId}.${scatter_id.toString().padLeft(2, '0')}.${interval_chunk_name}.vcf" \
-    -contamination 0 \
-    -ERC GVCF \
-    -L ${interval_list_file}
+
+    ${params.gatk_path} --java-options " -Xmx${params.memory}G ${params.java_opts}" \
+                        HaplotypeCaller \
+                        -R ${ref_fasta} \
+                        -I ${input_recal_merged_bam} \
+                        --output "${sampleId}.${scatter_id.toString().padLeft(2, '0')}.${interval_chunk_name}.vcf" \
+                        -contamination ${params.contamination} \
+                        -ERC GVCF \
+                        -L ${interval_list_file}
     """
 }
 
