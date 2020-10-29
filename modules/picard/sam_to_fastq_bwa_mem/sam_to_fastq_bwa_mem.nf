@@ -4,7 +4,7 @@ params.container = "broadinstitute/genomes-in-the-cloud:2.3.1-1512499786"
 params.gitc_path = "/usr/gitc"
 params.memory = '16'
 params.cpus = 16
-params.java_opts = ""
+params.java_opts = "-Xms3000m"
 params.compression_level = 5
 
 process PICARD_SAM_TO_FASTQ_BWA_MEM {
