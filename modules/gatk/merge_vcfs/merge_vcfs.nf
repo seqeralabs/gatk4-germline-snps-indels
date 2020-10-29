@@ -1,18 +1,15 @@
 nextflow.enable.dsl = 2
 
-params.container = "broadinstitute/gatk:4.1.8.1"
 params.gatk_path = "/gatk/gatk"
-params.memory = '16'
-params.cpus = 16
 params.java_opts = ""
 
 
 process GATK_MERGE_VCFS {
     tag "${sampleId}"
 
-    container params.container
-    memory "${params.memory} GB"
-    cpus params.cpus
+    container "broadinstitute/gatk:4.1.8.1"
+    memory 16
+    cpus 16
 
 
     input:
@@ -42,5 +39,5 @@ process GATK_MERGE_VCFS {
 }
 
 workflow test {
-   
+
 }

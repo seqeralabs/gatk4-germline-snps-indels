@@ -1,6 +1,6 @@
 nextflow.enable.dsl = 2
 
-params.compression_level = 5
+params.gatk_path = "/gatk/gatk"
 params.java_opts = ""
 
 process GATK_PAIRED_FASTQ_TO_UNMAPPED_BAM {
@@ -26,12 +26,9 @@ process GATK_PAIRED_FASTQ_TO_UNMAPPED_BAM {
     tuple val(sample_name), path("${readgroup_name}.unmapped.bam")
 
     script:
-
-    gatk_path = "/gatk/gatk"
-
     """
     sleep 60
-    ${gatk_path} --java-options "${params.java_opts}" \
+    ${params.gatk_path} --java-options "${params.java_opts}" \
                         FastqToSam \
                         --FASTQ ${fastq_1} \
                         --FASTQ2 ${fastq_2} \

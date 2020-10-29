@@ -97,14 +97,10 @@ params.PICARD_SAM_TO_FASTQ_BWA_MEM = [
 include { PICARD_SAM_TO_FASTQ_BWA_MEM } from "./modules/picard/sam_to_fastq_bwa_mem/sam_to_fastq_bwa_mem.nf" addParams(*: params.PICARD_SAM_TO_FASTQ_BWA_MEM)
 
 //------------------
-//params.UTILS_CREATE_SEQUENCE_GROUPING = []
 include { UTILS_CREATE_SEQUENCE_GROUPING } from "./modules/utils/create_sequence_grouping/create_sequence_grouping.nf"
-//include { UTILS_CREATE_SEQUENCE_GROUPING } from "./modules/utils/create_sequence_grouping/create_sequence_grouping.nf"  addParams(*: params.UTILS_CREATE_SEQUENCE_GROUPING)
 
 //------------------
-//params.UTILS_GET_BWA_VERSION = []
 include { UTILS_GET_BWA_VERSION } from "./modules/utils/get_bwa_version/get_bwa_version.nf"
-//include { UTILS_GET_BWA_VERSION } from "./modules/utils/get_bwa_version/get_bwa_version.nf" addParams(*: params.UTILS_GET_BWA_VERSION)
 
 
 //================================================================================

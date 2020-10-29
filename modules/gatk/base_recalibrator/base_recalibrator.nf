@@ -1,18 +1,15 @@
 nextflow.enable.dsl = 2
 
-params.container = "broadinstitute/gatk:4.1.8.1"
 params.gatk_path = "/gatk/gatk"
-params.memory = '16'
-params.cpus = 16
 params.java_opts = ""
 
 
 process GATK_BASE_RECALIBRATOR {
     tag "${sampleId}_${subgroup_name}"
 
-    container params.container
-    memory "${params.memory} GB"
-    cpus params.cpus
+    container "broadinstitute/gatk:4.1.8.1"
+    memory 16
+    cpus 16
 
     input:
     tuple val(sampleId),
@@ -25,7 +22,6 @@ process GATK_BASE_RECALIBRATOR {
     path(ref_dict)
     path(ref_fasta)
     path(ref_fasta_fai)
-
     path(dbSNP_vcf)
     path(dbSNP_vcf_index)
     path(known_indels_mills)
