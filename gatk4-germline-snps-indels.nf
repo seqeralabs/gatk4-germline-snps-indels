@@ -29,6 +29,10 @@ scattered_calling_interval = file(params.scattered_calling_interval)
 // Include modules and (soft) override module-level parameters
 //================================================================================
 
+include { BWA_GET_BWA_VERSION } from "./modules/bwa/get_bwa_version/get_bwa_version.nf"
+
+//------------------
+
 params.GATK_APPLY_BQSR = [
         java_opts: "-Xms3000m"
 ]
@@ -99,8 +103,6 @@ include { PICARD_SAM_TO_FASTQ_BWA_MEM } from "./modules/picard/sam_to_fastq_bwa_
 //------------------
 include { UTILS_CREATE_SEQUENCE_GROUPING } from "./modules/utils/create_sequence_grouping/create_sequence_grouping.nf"
 
-//------------------
-include { UTILS_GET_BWA_VERSION } from "./modules/utils/get_bwa_version/get_bwa_version.nf"
 
 
 //================================================================================
@@ -169,7 +171,7 @@ workflow PREPROCESSING_MAPPING {
             ref_fasta_fai
     )
 
-    bwa_version = UTILS_GET_BWA_VERSION()
+    bwa_version = BWA_GET_BWA_VERSION()
 
     GATK_MERGE_BAM_ALIGNMENT(
             PICARD_SAM_TO_FASTQ_BWA_MEM.out[0],
