@@ -38,3 +38,7 @@ process GATK_MARK_DUPLICATES {
     """
 
 }
+
+workflow test {
+   
+}

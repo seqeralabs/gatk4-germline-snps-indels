@@ -4,8 +4,7 @@ params.container = "broadinstitute/gatk:4.1.8.1"
 params.gatk_path = "/gatk/gatk"
 params.memory = '16'
 params.cpus = 16
-// FIXME
-params.java_opts = "-XX:GCTimeLimit=50 -XX:GCHeapFreeLimit=10"
+params.java_opts = ""
 
 
 process GATK_BASE_RECALIBRATOR {
@@ -53,4 +52,8 @@ process GATK_BASE_RECALIBRATOR {
                 --known-sites ${known_indels_dbSNP} \
                 -L ${subgroup_trimmed}
     """
+}
+
+workflow test {
+
 }

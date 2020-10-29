@@ -4,8 +4,7 @@ params.container = "broadinstitute/gatk:4.1.8.1"
 params.gatk_path = "/gatk/gatk"
 params.memory = '16'
 params.cpus = 16
-// FIXME
-params.java_opts = "-XX:GCTimeLimit=50 -XX:GCHeapFreeLimit=10"
+params.java_opts = ""
 params.contamination = 0
 
 process GATK_HAPLOTYPE_CALLER {
@@ -54,3 +53,7 @@ process GATK_HAPLOTYPE_CALLER {
     """
 }
 
+
+workflow test {
+   
+}

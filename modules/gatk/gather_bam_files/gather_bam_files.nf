@@ -37,3 +37,7 @@ process GATK_GATHER_BAM_FILES {
                 --CREATE_MD5_FILE true
     """
 }
+
+workflow test {
+
+}

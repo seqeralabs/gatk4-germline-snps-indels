@@ -16,3 +16,5 @@ sequence_grouping_unmapped:
   "s3://nextflow-ci/gatk-ubams/sequence_grouping_with_unmapped.txt"
 scattered_calling_interval:
   "s3://nextflow-ci/gatk-ubams/hg38_wgs_scattered_calling_intervals.txt"
+input_fofn:
+  "${baseDir}/test_data/manifest-6samples.txt"

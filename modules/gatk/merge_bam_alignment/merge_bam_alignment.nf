@@ -61,3 +61,7 @@ process GATK_MERGE_BAM_ALIGNMENT {
                         --UNMAP_CONTAMINANT_READS true
     """
 }
+
+workflow test {
+   
+}
