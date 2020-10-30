@@ -36,54 +36,54 @@ include { BWA_GET_BWA_VERSION } from "./modules/bwa/get_bwa_version/get_bwa_vers
 params.GATK_APPLY_BQSR = [
         java_opts: "-Xms3000m"
 ]
-include { GATK_APPLY_BQSR } from "./modules/gatk/apply_bqsr/apply_bqsr.nf" addParams(*: params.GATK_APPLY_BQSR)
+include { GATK_APPLY_BQSR } from "./modules/gatk/apply_bqsr/apply_bqsr.nf" addParams(params.GATK_APPLY_BQSR)
 
 //------------------
 
 params.GATK_BASE_RECALIBRATOR = [
         java_opts: "-Xms4000m"
 ]
-include { GATK_BASE_RECALIBRATOR } from "./modules/gatk/base_recalibrator/base_recalibrator.nf" addParams(*: params.GATK_BASE_RECALIBRATOR)
+include { GATK_BASE_RECALIBRATOR } from "./modules/gatk/base_recalibrator/base_recalibrator.nf" addParams(params.GATK_BASE_RECALIBRATOR)
 
 //------------------
 params.GATK_GATHER_BAM_FILES = [
         java_opts        : "-Xms2000m",
         compression_level: 5
 ]
-include { GATK_GATHER_BAM_FILES } from "./modules/gatk/gather_bam_files/gather_bam_files.nf" addParams(*: params.GATK_GATHER_BAM_FILES)
+include { GATK_GATHER_BAM_FILES } from "./modules/gatk/gather_bam_files/gather_bam_files.nf" addParams(params.GATK_GATHER_BAM_FILES)
 
 //------------------
 params.GATK_GATHER_BQSR_REPORTS = [
         java_opts: "-Xms3000m"
 ]
-include { GATK_GATHER_BQSR_REPORTS } from "./modules/gatk/gather_bqsr_reports/gather_bqsr_reports.nf" addParams(*: params.GATK_GATHER_BQSR_REPORTS)
+include { GATK_GATHER_BQSR_REPORTS } from "./modules/gatk/gather_bqsr_reports/gather_bqsr_reports.nf" addParams(params.GATK_GATHER_BQSR_REPORTS)
 
 
 //------------------
 params.GATK_HAPLOTYPE_CALLER = [
         java_opts: "-Xmx4G"
 ]
-include { GATK_HAPLOTYPE_CALLER } from "./modules/gatk/haplotype_caller/haplotype_caller.nf" addParams(*: params.GATK_HAPLOTYPE_CALLER)
+include { GATK_HAPLOTYPE_CALLER } from "./modules/gatk/haplotype_caller/haplotype_caller.nf" addParams(params.GATK_HAPLOTYPE_CALLER)
 
 //------------------
 params.GATK_MARK_DUPLICATES = [
         java_opts        : "-Xms4000m",
         compression_level: 5
 ]
-include { GATK_MARK_DUPLICATES } from "./modules/gatk/mark_duplicates/mark_duplicates.nf" addParams(*: params.GATK_MARK_DUPLICATES)
+include { GATK_MARK_DUPLICATES } from "./modules/gatk/mark_duplicates/mark_duplicates.nf" addParams(params.GATK_MARK_DUPLICATES)
 
 //------------------
 params.GATK_MERGE_BAM_ALIGNMENT = [
         java_opts        : "-Xms6000m",
         compression_level: 5
 ]
-include { GATK_MERGE_BAM_ALIGNMENT } from "./modules/gatk/merge_bam_alignment/merge_bam_alignment.nf" addParams(*: params.GATK_MERGE_BAM_ALIGNMENT)
+include { GATK_MERGE_BAM_ALIGNMENT } from "./modules/gatk/merge_bam_alignment/merge_bam_alignment.nf" addParams(params.GATK_MERGE_BAM_ALIGNMENT)
 
 //------------------
 params.GATK_MERGE_VCFS = [
         java_opts: "-Xmx4G"
 ]
-include { GATK_MERGE_VCFS } from "./modules/gatk/merge_vcfs/merge_vcfs.nf" addParams(*: params.GATK_MERGE_VCFS)
+include { GATK_MERGE_VCFS } from "./modules/gatk/merge_vcfs/merge_vcfs.nf" addParams(params.GATK_MERGE_VCFS)
 
 //------------------
 params.GATK_SORT_AND_FIX_TAGS = [
@@ -91,14 +91,14 @@ params.GATK_SORT_AND_FIX_TAGS = [
         java_opts_fix    : "-Xms500m",
         compression_level: 5
 ]
-include { GATK_SORT_AND_FIX_TAGS } from "./modules/gatk/sort_and_fix_tags/sort_and_fix_tags.nf" addParams(*: params.GATK_SORT_AND_FIX_TAGS)
+include { GATK_SORT_AND_FIX_TAGS } from "./modules/gatk/sort_and_fix_tags/sort_and_fix_tags.nf" addParams(params.GATK_SORT_AND_FIX_TAGS)
 
 //------------------
 params.PICARD_SAM_TO_FASTQ_BWA_MEM = [
         java_opts        : "-Xms3000m",
         compression_level: 5
 ]
-include { PICARD_SAM_TO_FASTQ_BWA_MEM } from "./modules/picard/sam_to_fastq_bwa_mem/sam_to_fastq_bwa_mem.nf" addParams(*: params.PICARD_SAM_TO_FASTQ_BWA_MEM)
+include { PICARD_SAM_TO_FASTQ_BWA_MEM } from "./modules/picard/sam_to_fastq_bwa_mem/sam_to_fastq_bwa_mem.nf" addParams(params.PICARD_SAM_TO_FASTQ_BWA_MEM)
 
 //------------------
 include { UTILS_CREATE_SEQUENCE_GROUPING } from "./modules/utils/create_sequence_grouping/create_sequence_grouping.nf"
