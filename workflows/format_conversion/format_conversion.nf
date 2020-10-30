@@ -5,17 +5,16 @@ nextflow.enable.dsl = 2
 // Include modules and (soft) override module-level parameters
 //================================================================================
 
-params.GATK_PAIRED_FASTQ_TO_UNMAPPED_BAM = []
-include { GATK_PAIRED_FASTQ_TO_UNMAPPED_BAM } from "../../modules/gatk/paired_fastq_to_unmapped_bam/paired_fastq_to_unmapped_bam.nf" addParams(*: params.GATK_PAIRED_FASTQ_TO_UNMAPPED_BAM)
+include { GATK_PAIRED_FASTQ_TO_UNMAPPED_BAM } from "../../modules/gatk/paired_fastq_to_unmapped_bam/paired_fastq_to_unmapped_bam.nf"
 
 
 //================================================================================
 // Prepare channels
 //================================================================================
+
 fastq_files_list = file(params.input_fofn)
 
 // Convert input manifest to a channel.
-
 fastq_params_ch = channel.fromPath(fastq_files_list)
         .splitText(keepHeader: false)
         .map { line ->
@@ -41,10 +40,10 @@ fastq_params_ch = channel.fromPath(fastq_files_list)
 
 workflow FORMAT_CONVERSION {
     take:
-    data
+    fastq_files
 
     main:
-    GATK_PAIRED_FASTQ_TO_UNMAPPED_BAM(data)
+    GATK_PAIRED_FASTQ_TO_UNMAPPED_BAM(fastq_files)
     emit:
     GATK_PAIRED_FASTQ_TO_UNMAPPED_BAM.out
 }

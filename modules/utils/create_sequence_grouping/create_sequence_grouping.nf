@@ -21,3 +21,7 @@ process UTILS_CREATE_SEQUENCE_GROUPING {
     sequenceGrouping.py ${ref_dict} "sequence_grouping.txt" "sequence_grouping_with_unmapped.txt"
     """
 }
+
+workflow test {
+   
+}

@@ -42,3 +42,7 @@ process GATK_PAIRED_FASTQ_TO_UNMAPPED_BAM {
                         --SEQUENCING_CENTER ${sequencing_center}
     """
 }
+
+workflow test {
+
+}

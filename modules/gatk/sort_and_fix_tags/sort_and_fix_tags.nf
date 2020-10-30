@@ -50,3 +50,7 @@ process GATK_SORT_AND_FIX_TAGS {
         --REFERENCE_SEQUENCE ${ref_fasta}
     """
 }
+
+workflow test {
+
+}
