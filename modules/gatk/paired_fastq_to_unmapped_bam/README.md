@@ -24,8 +24,9 @@ nextflow run paired_fastq_to_unmapped_bam.nf -entry test -params-file test_param
 We can use the optimum configuration without making any change to the module file, for the production workloads, by simply copy and paste the desired configs to the workflow file or workflow params.
 
 
-- Workflow file 
-```
+- Workflow file e.g. `nextflow.config`
+
+```nextflow
 params.GATK_PAIRED_FASTQ_TO_UNMAPPED_BAM [
 // add the optimized params
 java_opts : ""
@@ -33,7 +34,7 @@ java_opts : ""
 include { GATK_PAIRED_FASTQ_TO_UNMAPPED_BAM } from "relative_path_to/modules/gatk/paired_fastq_to_unmapped_bam/paired_fastq_to_unmapped_bam.nf" addParams (params.GATK_PAIRED_FASTQ_TO_UNMAPPED_BAM)
 ```
 
-- Workflow params file
+- Workflow params file e.g. `params.yaml`
 
 ```yaml
 
