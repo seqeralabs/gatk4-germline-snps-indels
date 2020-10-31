@@ -111,21 +111,21 @@ If we use a tab-delimited files with sampleId in one column and path to unaligne
 it will eliminate the need make assumptions about base filename structure
 
 */
-unmapped_bams_channel = channel.fromPath(unmapped_bams)
+unmapped_bams_ch = channel.fromPath(unmapped_bams)
         .splitText()
         .map { line -> [line.tokenize("\t")[0], file(line.tokenize("\t")[1].trim())] }
 
 
 // Prepare channel inputs for Base Recalibration
 
-subgrouping = channel.fromPath(sequence_grouping)
+subgrouping_ch = channel.fromPath(sequence_grouping)
         .splitText()
         .map { line -> [line.tokenize(':')[0].trim(), line.trim()] }
 
 // Prepare channel inputs for  applying BQSR
 
 recal_scatter_counter = 0
-subgrouping_unmapped = channel.fromPath(sequence_grouping_unmapped)
+subgrouping_unmapped_ch = channel.fromPath(sequence_grouping_unmapped)
         .splitText()
         .map { line ->
             recal_scatter_counter = recal_scatter_counter + 1
@@ -151,11 +151,11 @@ calling_intervals = channel.fromPath(scattered_calling_interval)
 
 workflow PREPROCESSING_MAPPING {
     take:
-    data
+    unmapped_bams
 
     main:
     PICARD_SAM_TO_FASTQ_BWA_MEM(
-            data,
+            unmapped_bams,
             ref_alt,
             ref_amb,
             ref_ann,
@@ -202,11 +202,11 @@ workflow PREPROCESSING_MAPPING {
 
 workflow QUALITY_RECALIBRATION {
     take:
-    data
+    sorted_bam_and_subgroup
 
     main:
     GATK_BASE_RECALIBRATOR(
-            data.combine(subgrouping),
+            sorted_bam_and_subgroup.combine(subgrouping_ch),
             ref_dict,
             ref_fasta,
             ref_fasta_fai,
@@ -224,7 +224,7 @@ workflow QUALITY_RECALIBRATION {
 
 
     GATK_APPLY_BQSR(
-            data.join(GATK_GATHER_BQSR_REPORTS.out).combine(subgrouping_unmapped),
+            sorted_bam_and_subgroup.join(GATK_GATHER_BQSR_REPORTS.out).combine(subgrouping_unmapped_ch),
             ref_dict,
             ref_fasta,
             ref_fasta_fai
@@ -270,7 +270,7 @@ workflow VARIANT_DISCOVERY {
 
 workflow {
 
-    PREPROCESSING_MAPPING(unmapped_bams_channel)
+    PREPROCESSING_MAPPING(unmapped_bams_ch)
 
     QUALITY_RECALIBRATION(PREPROCESSING_MAPPING.out)
 
