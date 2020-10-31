@@ -44,6 +44,7 @@ workflow FORMAT_CONVERSION {
 
     main:
     GATK_PAIRED_FASTQ_TO_UNMAPPED_BAM(fastq_files)
+   
     emit:
     GATK_PAIRED_FASTQ_TO_UNMAPPED_BAM.out
 }

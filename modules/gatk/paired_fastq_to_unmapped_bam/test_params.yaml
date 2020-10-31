@@ -1,0 +1,32 @@
+gatk_path:
+  "gatk"
+
+java_opts:
+  ""
+
+test_read_1:
+  "test_data/SRR047732_1.10000_reads.filt.fastq.gz"
+
+test_read_2:
+  "test_data/SRR047732_2.10000_reads.filt.fastq.gz"
+
+run_date:
+  "2010-01-05"
+
+sample_name:
+  "NA19651"
+
+library_name:
+  "Solexa-26415"
+
+platform_name:
+  "illumina"
+
+platform_unit:
+  "BI.PE.100506_SL-XCQ_0002_FC61GU6AAXX.3"
+
+readgroup_name:
+  "NA19651-A"
+
+sequencing_center:
+  "BI"

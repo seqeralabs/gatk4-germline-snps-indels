@@ -43,3 +43,25 @@ process GATK_PAIRED_FASTQ_TO_UNMAPPED_BAM {
     """
 }
 
+//================================================================================
+// Module test
+//================================================================================
+
+workflow test {
+
+    fastq_params_ch = Channel.of([
+            file(params.test_read_1),
+            file(params.test_read_2),
+            params.run_date,
+            params.sample_name,
+            params.library_name,
+            params.platform_name,
+            params.platform_unit,
+            params.readgroup_name,
+            params.sequencing_center
+    ])
+
+
+    GATK_PAIRED_FASTQ_TO_UNMAPPED_BAM(fastq_params_ch)
+
+}
