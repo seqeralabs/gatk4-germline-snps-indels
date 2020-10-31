@@ -244,11 +244,11 @@ workflow QUALITY_RECALIBRATION {
 
 workflow VARIANT_DISCOVERY {
     take:
-    data
+    bam_and_internal
 
     main:
     GATK_HAPLOTYPE_CALLER(
-            data.combine(calling_intervals),
+            bam_and_internal.combine(calling_intervals),
             ref_dict,
             ref_fasta,
             ref_fasta_fai

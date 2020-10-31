@@ -1,13 +1,12 @@
 nextflow.enable.dsl = 2
 
-params.container = "broadinstitute/genomes-in-the-cloud:2.3.1-1512499786"
 params.gitc_path = "/usr/gitc"
 
 
 process BWA_GET_BWA_VERSION {
     tag "BWA version"
 
-    container params.container
+    container = "broadinstitute/genomes-in-the-cloud:2.3.1-1512499786"
 
     output:
     stdout
