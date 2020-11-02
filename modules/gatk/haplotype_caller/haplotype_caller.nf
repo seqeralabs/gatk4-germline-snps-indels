@@ -39,7 +39,7 @@ process GATK_HAPLOTYPE_CALLER {
     """
     set -e
 
-    ${params.gatk_path} --java-options " -Xmx${params.memory}G ${params.java_opts}" \
+    ${params.gatk_path} --java-options "${params.java_opts}" \
                         HaplotypeCaller \
                         -R ${ref_fasta} \
                         -I ${input_recal_merged_bam} \
