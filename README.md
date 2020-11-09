@@ -168,7 +168,7 @@ profiles {
 
 - `Module` level tests
 
-These are conceptually similar to the traditional `Unit test` and the `modules` should be designed to be testable individually. For a reference please take a look at `/modules/gatk/paired_fastq_to_unmapped_bam/README.md`. 
+These are conceptually similar to the traditional `Unit test` and the `modules` should be designed to be testable individually. For a reference please take a look at [`/modules/gatk/paired_fastq_to_unmapped_bam/README.md`](/modules/gatk/paired_fastq_to_unmapped_bam/README.md). 
 
 - `Workflow` level tests
 
