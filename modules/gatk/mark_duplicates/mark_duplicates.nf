@@ -19,7 +19,7 @@ process GATK_MARK_DUPLICATES {
     tag "${sampleId}"
 
     container "quay.io/seqeralabs/gatk4-germline-snps-indels"
-    memory "16 GB"
+    memory "32 GB"
     cpus 16
 
     input:
