@@ -11,7 +11,7 @@
 
 nextflow.enable.dsl = 2
 
-params.gatk_path = "/gatk/gatk"
+params.gatk_path = "gatk"
 params.java_opts_sort = ""
 params.java_opts_fix = ""
 params.compression_level = 5
@@ -20,7 +20,7 @@ params.compression_level = 5
 process GATK_SORT_AND_FIX_TAGS {
     tag "${sampleId}"
 
-    container = "broadinstitute/gatk:4.1.8.1"
+    container "quay.io/seqeralabs/gatk4-germline-snps-indels"
     memory "16 GB"
     cpus 16
 
