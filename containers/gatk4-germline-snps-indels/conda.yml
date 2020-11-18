@@ -1,4 +1,4 @@
-name: gatk4
+name: gatk4-germline-snps-indels
 channels:
   - defaults
   - bioconda

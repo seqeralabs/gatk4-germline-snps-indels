@@ -11,14 +11,14 @@
 
 nextflow.enable.dsl = 2
 
-params.gatk_path = "/gatk/gatk"
+params.gatk_path = "gatk"
 params.java_opts = ""
 
 
 process GATK_APPLY_BQSR {
     tag "${sampleId}_${subgroup_unmapped_name}"
 
-    container = "broadinstitute/gatk:4.1.8.1"
+    container "quay.io/seqeralabs/gatk4-germline-snps-indels"
     memory "16 GB"
     cpus 16
 

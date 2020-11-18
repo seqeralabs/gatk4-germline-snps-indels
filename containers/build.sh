@@ -1,4 +1,8 @@
 #!/bin/bash
+
+# NOTE: An example of building and pushing multiple containers to ECR registry.
+# TODO: Please modify this script for your own use-case.
+
 REGISTRY="ecr/REGISTRY"
 for container_dir in $(find * -type d); do
   echo "Building $container_dir ..."
