@@ -11,15 +11,15 @@
 
 nextflow.enable.dsl = 2
 
-params.gatk_path = "/gatk/gatk"
+params.gatk_path = "gatk"
 params.java_opts = ""
 params.compression_level = 5
 
 process GATK_MARK_DUPLICATES {
     tag "${sampleId}"
 
-    container = "broadinstitute/gatk:4.1.8.1"
-    memory "16 GB"
+    container "quay.io/seqeralabs/gatk4-germline-snps-indels"
+    memory "32 GB"
     cpus 16
 
     input:
