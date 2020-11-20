@@ -38,4 +38,10 @@ process GATK_GATHER_BQSR_REPORTS {
                         -I ${input_bqsr_params} \
                         -O "${sampleId}.recal_data.csv"
     """
+
+    stub:
+
+    """
+    touch "${sampleId}.recal_data.csv"
+    """
 }

@@ -45,4 +45,11 @@ process GATK_MARK_DUPLICATES {
                         --CREATE_MD5_FILE true
     """
 
+    stub:
+
+    """
+    touch ${sampleId}_merged.deduped.bam
+    touch ${sampleId}_merged.deduped.metrics.txt
+    """
+
 }

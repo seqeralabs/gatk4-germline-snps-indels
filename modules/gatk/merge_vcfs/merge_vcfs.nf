@@ -47,5 +47,12 @@ process GATK_MERGE_VCFS {
                         --INPUT ${input_vcfs_params} \
                         --OUTPUT ${sampleId}.merged.vcf
     """
+
+    stub:
+
+    """
+    touch ${sampleId}.merged.vcf
+    """
+
 }
 

@@ -68,4 +68,9 @@ process GATK_MERGE_BAM_ALIGNMENT {
                         --ALIGNER_PROPER_PAIR_FLAGS true \
                         --UNMAP_CONTAMINANT_READS true
     """
+
+    stub:
+    """
+    touch ${sampleId}.mapped.merged.bam
+    """
 }
