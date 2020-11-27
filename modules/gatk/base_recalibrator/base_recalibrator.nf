@@ -60,4 +60,10 @@ process GATK_BASE_RECALIBRATOR {
                 --known-sites ${known_indels_dbSNP} \
                 -L ${subgroup_trimmed}
     """
+
+    stub:
+
+    """
+    touch "${sampleId}_recalibration_report_${subgroup_name}.recal_data.csv"
+    """
 }

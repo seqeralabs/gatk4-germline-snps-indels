@@ -59,5 +59,13 @@ process GATK_HAPLOTYPE_CALLER {
                         -ERC GVCF \
                         -L ${interval_list_file}
     """
+
+    stub:
+
+    """
+    touch "${sampleId}.${scatter_id.toString().padLeft(2, '0')}.${interval_chunk_name}.vcf" 
+    touch "${sampleId}.${scatter_id.toString().padLeft(2, '0')}.${interval_chunk_name}.vcf.idx" 
+
+    """
 }
 

@@ -60,4 +60,14 @@ process GATK_SORT_AND_FIX_TAGS {
         --CREATE_MD5_FILE true \
         --REFERENCE_SEQUENCE ${ref_fasta}
     """
+
+
+    stub:
+
+    """
+    touch ${sampleId}.mapped.merged.duplicate_marked.sorted.bai
+    touch ${sampleId}.mapped.merged.duplicate_marked.sorted.bam
+    touch ${sampleId}.mapped.merged.duplicate_marked.sorted.bam.md5
+    
+    """
 }

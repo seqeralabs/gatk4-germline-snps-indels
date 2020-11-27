@@ -44,4 +44,10 @@ process GATK_GATHER_BAM_FILES {
                 --CREATE_INDEX true \
                 --CREATE_MD5_FILE true
     """
+
+    stub:
+
+    """
+    touch "${sampleId}.recal.merged.bam"
+    """
 }

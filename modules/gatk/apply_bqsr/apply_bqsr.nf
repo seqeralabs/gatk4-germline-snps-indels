@@ -59,4 +59,10 @@ process GATK_APPLY_BQSR {
                         --create-output-bam-md5 \
                         --use-original-qualities
     """
+
+    stub:
+
+    """
+    touch "${sampleId}.${scatter_id.toString().padLeft(2, '0')}.${subgroup_unmapped_name}.recal.bam" 
+    """
 }

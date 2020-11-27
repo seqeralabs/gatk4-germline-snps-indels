@@ -52,6 +52,12 @@ process GATK_PAIRED_FASTQ_TO_UNMAPPED_BAM {
                         --PLATFORM ${platform_name} \
                         --SEQUENCING_CENTER ${sequencing_center}
     """
+
+    stub:
+
+    """
+    touch ${readgroup_name}.unmapped.bam
+    """
 }
 
 //================================================================================

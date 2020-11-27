@@ -59,4 +59,11 @@ process PICARD_SAM_TO_FASTQ_BWA_MEM {
     | \
 		samtools view -1 - > ${sampleId}.mapped.bam
     """
+
+
+    stub:
+
+    """
+    touch ${sampleId}.mapped.bam
+    """
 }
