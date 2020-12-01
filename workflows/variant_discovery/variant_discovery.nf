@@ -13,7 +13,7 @@ nextflow.enable.dsl = 2
 
 
 //================================================================================
-// Read and derive file names and location from the params.yaml
+// Read and derive file names and location from the params
 //================================================================================
 
 ref_fasta = file(params.fasta)
@@ -25,8 +25,8 @@ scattered_calling_interval = file(params.scattered_calling_interval)
 // Include modules and (soft) override module-level parameters
 //================================================================================
 
-include { GATK_HAPLOTYPE_CALLER } from "./modules/gatk/haplotype_caller/haplotype_caller.nf" addParams(params.GATK_HAPLOTYPE_CALLER)
-include { GATK_MERGE_VCFS } from "./modules/gatk/merge_vcfs/merge_vcfs.nf" addParams(params.GATK_MERGE_VCFS)
+include { GATK_HAPLOTYPE_CALLER } from "../../modules/gatk/haplotype_caller/haplotype_caller.nf" addParams(params.GATK_HAPLOTYPE_CALLER)
+include { GATK_MERGE_VCFS } from "../../modules/gatk/merge_vcfs/merge_vcfs.nf" addParams(params.GATK_MERGE_VCFS)
 
 
 //================================================================================

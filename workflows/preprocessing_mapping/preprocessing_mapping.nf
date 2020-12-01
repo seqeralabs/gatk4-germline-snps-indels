@@ -13,7 +13,7 @@ nextflow.enable.dsl = 2
 
 
 //================================================================================
-// Read and derive file names and location from the params.yaml
+// Read and derive file names and location from the params
 //================================================================================
 
 unmapped_bams = file(params.unmapped_bams_list)
@@ -31,11 +31,11 @@ ref_dict = file(params.fasta.replace(".fasta", ".dict"))
 // Include modules and (soft) override module-level parameters
 //================================================================================
 
-include { PICARD_SAM_TO_FASTQ_BWA_MEM } from "./modules/picard/sam_to_fastq_bwa_mem/sam_to_fastq_bwa_mem.nf" addParams(params.PICARD_SAM_TO_FASTQ_BWA_MEM)
-include { BWA_GET_BWA_VERSION } from "./modules/bwa/get_bwa_version/get_bwa_version.nf"
-include { GATK_MERGE_BAM_ALIGNMENT } from "./modules/gatk/merge_bam_alignment/merge_bam_alignment.nf" addParams(params.GATK_MERGE_BAM_ALIGNMENT)
-include { GATK_MARK_DUPLICATES } from "./modules/gatk/mark_duplicates/mark_duplicates.nf" addParams(params.GATK_MARK_DUPLICATES)
-include { GATK_SORT_AND_FIX_TAGS } from "./modules/gatk/sort_and_fix_tags/sort_and_fix_tags.nf" addParams(params.GATK_SORT_AND_FIX_TAGS)
+include { PICARD_SAM_TO_FASTQ_BWA_MEM } from "../../modules/picard/sam_to_fastq_bwa_mem/sam_to_fastq_bwa_mem.nf" addParams(params.PICARD_SAM_TO_FASTQ_BWA_MEM)
+include { BWA_GET_BWA_VERSION } from "../../modules/bwa/get_bwa_version/get_bwa_version.nf"
+include { GATK_MERGE_BAM_ALIGNMENT } from "../../modules/gatk/merge_bam_alignment/merge_bam_alignment.nf" addParams(params.GATK_MERGE_BAM_ALIGNMENT)
+include { GATK_MARK_DUPLICATES } from "../../modules/gatk/mark_duplicates/mark_duplicates.nf" addParams(params.GATK_MARK_DUPLICATES)
+include { GATK_SORT_AND_FIX_TAGS } from "../../modules/gatk/sort_and_fix_tags/sort_and_fix_tags.nf" addParams(params.GATK_SORT_AND_FIX_TAGS)
 
 
 //================================================================================

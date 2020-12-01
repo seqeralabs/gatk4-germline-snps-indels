@@ -13,7 +13,7 @@ nextflow.enable.dsl = 2
 
 
 //================================================================================
-// Read and derive file names and location from the params.yaml
+// Read and derive file names and location from the params
 //================================================================================
 
 ref_fasta = file(params.fasta)
@@ -33,10 +33,10 @@ sequence_grouping_unmapped = file(params.sequence_grouping_unmapped)
 //================================================================================
 
 
-include { GATK_APPLY_BQSR } from "./modules/gatk/apply_bqsr/apply_bqsr.nf" addParams(params.GATK_APPLY_BQSR)
-include { GATK_BASE_RECALIBRATOR } from "./modules/gatk/base_recalibrator/base_recalibrator.nf" addParams(params.GATK_BASE_RECALIBRATOR)
-include { GATK_GATHER_BAM_FILES } from "./modules/gatk/gather_bam_files/gather_bam_files.nf" addParams(params.GATK_GATHER_BAM_FILES)
-include { GATK_GATHER_BQSR_REPORTS } from "./modules/gatk/gather_bqsr_reports/gather_bqsr_reports.nf" addParams(params.GATK_GATHER_BQSR_REPORTS)
+include { GATK_APPLY_BQSR } from "../../modules/gatk/apply_bqsr/apply_bqsr.nf" addParams(params.GATK_APPLY_BQSR)
+include { GATK_BASE_RECALIBRATOR } from "../../modules/gatk/base_recalibrator/base_recalibrator.nf" addParams(params.GATK_BASE_RECALIBRATOR)
+include { GATK_GATHER_BAM_FILES } from "../../modules/gatk/gather_bam_files/gather_bam_files.nf" addParams(params.GATK_GATHER_BAM_FILES)
+include { GATK_GATHER_BQSR_REPORTS } from "../../modules/gatk/gather_bqsr_reports/gather_bqsr_reports.nf" addParams(params.GATK_GATHER_BQSR_REPORTS)
 
 
 //================================================================================

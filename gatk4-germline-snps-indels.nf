@@ -13,13 +13,13 @@ nextflow.enable.dsl = 2
 
 
 //================================================================================
-// Read and derive file names and location from the params.yaml
+// Read and derive file names and location from the params
 //================================================================================
 
 unmapped_bams = file(params.unmapped_bams_list)
 
 //================================================================================
-// Include modules and (soft) override module-level parameters
+// Include modules and (soft) override sub-workflow-level parameters
 //================================================================================
 
 include { FORMAT_CONVERSION } from "./workflows/format_conversion/format_conversion.nf"
