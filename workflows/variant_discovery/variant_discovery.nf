@@ -16,51 +16,57 @@ nextflow.enable.dsl = 2
 // Read and derive file names and location from the params.yaml
 //================================================================================
 
-unmapped_bams = file(params.unmapped_bams_list)
+ref_fasta = file(params.fasta)
+ref_fasta_fai = file("${params.fasta}.fai")
+ref_dict = file(params.fasta.replace(".fasta", ".dict"))
+scattered_calling_interval = file(params.scattered_calling_interval)
 
 //================================================================================
 // Include modules and (soft) override module-level parameters
 //================================================================================
 
-include { FORMAT_CONVERSION } from "./workflows/format_conversion/format_conversion.nf"
-include { PREPROCESSING_MAPPING } from "./workflows/preprocessing_mapping/preprocessing_mapping.nf"
-include { QUALITY_RECALIBRATION } from "./workflows/quality_recalibration/quality_recalibration.nf"
-include { VARIANT_DISCOVERY } from "./workflows/variant_discovery/variant_discovery.nf"
+include { GATK_HAPLOTYPE_CALLER } from "./modules/gatk/haplotype_caller/haplotype_caller.nf" addParams(params.GATK_HAPLOTYPE_CALLER)
+include { GATK_MERGE_VCFS } from "./modules/gatk/merge_vcfs/merge_vcfs.nf" addParams(params.GATK_MERGE_VCFS)
 
 
 //================================================================================
 // Prepare channels
 //================================================================================
 
-/*
+// Prepare channel for scattered calling intervals: input to haplotypecaller
 
-If we use a tab-delimited files with sampleId in one column and path to unaligned bam in the second,
-it will eliminate the need make assumptions about base filename structure
+calling_scatter_counter = 0
 
-*/
-unmapped_bams_ch = channel.fromPath(unmapped_bams)
+calling_intervals = channel.fromPath(scattered_calling_interval)
         .splitText()
-        .map { line -> [line.tokenize("\t")[0], file(line.tokenize("\t")[1].trim())] }
+        .map { line ->
+            calling_scatter_counter = calling_scatter_counter + 1
+            [calling_scatter_counter, line.split("/")[6], line.trim()]
+        }
 
 
 //================================================================================
 // Main workflow
 //================================================================================
 
-workflow {
+workflow VARIANT_DISCOVERY {
+    take:
+    bam_and_interval
 
-    PREPROCESSING_MAPPING(unmapped_bams_ch)
+    main:
+    GATK_HAPLOTYPE_CALLER(
+            bam_and_interval.combine(calling_intervals),
+            ref_dict,
+            ref_fasta,
+            ref_fasta_fai
+    )
 
-    QUALITY_RECALIBRATION(PREPROCESSING_MAPPING.out)
+    GATK_MERGE_VCFS(
+            GATK_HAPLOTYPE_CALLER.out.groupTuple()
+    )
 
-    VARIANT_DISCOVERY(QUALITY_RECALIBRATION.out)
+    emit:
+    GATK_MERGE_VCFS.out
 
-    VARIANT_DISCOVERY.out
-            .map {
-                sampleId, vcfFile -> "${sampleId}\ts3://${vcfFile}"
-            }
-            .collectFile(
-                    name: 'merged_vcfs.tsv', newLine: true, storeDir: "${params.outdir}"
-            )
+
 }
-
