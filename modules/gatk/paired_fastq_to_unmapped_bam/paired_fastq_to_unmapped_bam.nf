@@ -12,7 +12,7 @@
 nextflow.enable.dsl = 2
 
 params.gatk_path = "gatk"
-params.java_opts = ""
+params.java_opts = "-Xms3000m"
 
 process GATK_PAIRED_FASTQ_TO_UNMAPPED_BAM {
     tag "${sample_name}"
