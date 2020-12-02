@@ -15,7 +15,7 @@ params.gatk_path = "gatk"
 params.java_opts = ""
 
 process GATK_PAIRED_FASTQ_TO_UNMAPPED_BAM {
-    tag "${sampleId}"
+    tag "${sample_name}"
 
     container "quay.io/seqeralabs/gatk4-germline-snps-indels"
     memory "32 GB"
