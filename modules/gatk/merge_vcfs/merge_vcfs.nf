@@ -12,7 +12,7 @@
 nextflow.enable.dsl = 2
 
 params.gatk_path = "gatk"
-params.java_opts = ""
+params.java_opts = "-Xmx4G"
 
 
 process GATK_MERGE_VCFS {

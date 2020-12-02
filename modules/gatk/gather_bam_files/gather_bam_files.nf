@@ -12,7 +12,7 @@
 nextflow.enable.dsl = 2
 
 params.gatk_path = "gatk"
-params.java_opts = ""
+params.java_opts = "-Xms2000m"
 params.compression_level = 5
 
 process GATK_GATHER_BAM_FILES {
