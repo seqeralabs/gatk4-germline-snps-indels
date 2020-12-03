@@ -13,13 +13,13 @@ nextflow.enable.dsl = 2
 
 
 //================================================================================
-// Read and derive file names and location from the params.yaml
+// Derive file names and location from the params.yaml
 //================================================================================
 
 fastq_files_list = file(params.input_fofn)
 
 //================================================================================
-// Include modules and (soft) override workflow-level parameters
+// Include sub-workflows and (soft) override workflow-level parameters
 //================================================================================
 
 include { FORMAT_CONVERSION } from "./workflows/format_conversion/format_conversion.nf"
