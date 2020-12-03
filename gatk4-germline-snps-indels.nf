@@ -93,7 +93,7 @@ calling_intervals = channel.fromPath(scattered_calling_interval)
         .splitText()
         .map { line ->
             calling_scatter_counter = calling_scatter_counter + 1
-            [calling_scatter_counter, line.split("/")[6], line.trim()]
+            [calling_scatter_counter, line.split("/")[5], line.trim()]
         }
 
 
