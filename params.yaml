@@ -14,7 +14,7 @@ input_fofn:
 
 # Main output dir
 outdir:
-  "s3://nextflow-ci/gatk-ubams/results/"
+  "s3://nextflow-ci/gatk4-germline-snps-indels/results"
 
 # Auxilliary files
 unmapped_bams_list:
