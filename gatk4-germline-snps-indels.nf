@@ -13,13 +13,13 @@ nextflow.enable.dsl = 2
 
 
 //================================================================================
-// Read and derive file names and location from the params.yaml
+// Derive file names and location from the params.yaml
 //================================================================================
 
-unmapped_bams = file(params.unmapped_bams_list)
+fastq_files_list = file(params.input_fofn)
 
 //================================================================================
-// Include modules and (soft) override workflow-level parameters
+// Include sub-workflows and (soft) override workflow-level parameters
 //================================================================================
 
 include { FORMAT_CONVERSION } from "./workflows/format_conversion/format_conversion.nf"
@@ -32,15 +32,25 @@ include { VARIANT_DISCOVERY } from "./workflows/variant_discovery/variant_discov
 // Prepare channels
 //================================================================================
 
-/*
 
-If we use a tab-delimited files with sampleId in one column and path to unaligned bam in the second,
-it will eliminate the need make assumptions about base filename structure
+// Convert input manifest to a channel.
+fastq_params_ch = channel.fromPath(fastq_files_list)
+        .splitText(keepHeader: false)
+        .map { line ->
+            cols = line.tokenize('\t')
+            [
+                    file(cols[2]), // fastq_1
+                    file(cols[3]), // fastq_2
+                    cols[6], // run_date
+                    cols[1], // sample_name
+                    cols[4], // library_name
+                    cols[7], // platform_name
+                    cols[5], // platform_name
+                    cols[0], // readgroup_name
+                    cols[8] // sequencing_center
 
-*/
-unmapped_bams_ch = channel.fromPath(unmapped_bams)
-        .splitText()
-        .map { line -> [line.tokenize("\t")[0], file(line.tokenize("\t")[1].trim())] }
+            ]
+        }
 
 //================================================================================
 // Main workflow
@@ -48,7 +58,9 @@ unmapped_bams_ch = channel.fromPath(unmapped_bams)
 
 workflow {
 
-    PREPROCESSING_MAPPING(unmapped_bams_ch)
+    FORMAT_CONVERSION({ fastq_params_ch })
+
+    PREPROCESSING_MAPPING(FORMAT_CONVERSION.out)
 
     QUALITY_RECALIBRATION(PREPROCESSING_MAPPING.out)
 
