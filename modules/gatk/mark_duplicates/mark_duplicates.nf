@@ -6,8 +6,7 @@ params.compression_level = 5
 
 process GATK_MARK_DUPLICATES {
     tag "${sampleId}"
-
-    container "quay.io/seqeralabs/gatk4-germline-snps-indels"
+    container "quay.io/seqeralabs/gatk4:4.1.8.1"
     memory "32 GB"
     cpus 16
 
