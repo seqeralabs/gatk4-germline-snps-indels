@@ -6,8 +6,7 @@ params.java_opts = "-Xms4000m"
 
 process GATK_BASE_RECALIBRATOR {
     tag "${sampleId}_${subgroup_name}"
-
-    container "quay.io/seqeralabs/gatk4-germline-snps-indels"
+    container "quay.io/seqeralabs/gatk4:4.1.8.1"
     memory "16 GB"
     cpus 16
 

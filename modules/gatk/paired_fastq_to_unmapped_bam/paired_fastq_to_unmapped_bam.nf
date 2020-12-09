@@ -5,8 +5,7 @@ params.java_opts = "-Xms3000m"
 
 process GATK_PAIRED_FASTQ_TO_UNMAPPED_BAM {
     tag "${sample_name}"
-
-    container "quay.io/seqeralabs/gatk4-germline-snps-indels"
+    container "quay.io/seqeralabs/gatk4:4.1.8.1"
     memory "32 GB"
     cpus 16
 
