@@ -9,6 +9,19 @@ This pipeline is readily executable with `Tower`.
 For example, if you wish to run this pipeline with `AWS Batch` please follow the steps outlined [here for setting up the AWS enviroment](https://help.tower.nf/docs/compute-envs/aws-batch/) and [here for launching the pipeline](https://help.tower.nf/docs/launch/overview/)  on the official Tower setup docs.
 
 
+# Stub-run (mock-run) for the pipeline
+
+For testing the workflow, you can enable the `stub-run` feature on tower while launching the pipeline.
+
+For testing locally, you can use the following command 
+
+```
+nextflow run 'https://github.com/seqeralabs/gatk4-germline-snps-indels' \
+		 -params-file params.yaml \
+		 -main-script gatk4-germline-snps-indels.nf \
+		 -latest \
+		 -stub-run
+```
 
 # Folder structure
 
@@ -17,14 +30,12 @@ The code organization is as follows.
 ```
 $ tree -L 2
 .
-├── assets
-│   └── images
 ├── LICENSE
 ├── README.md
 ├── codespaces.md
 ├── containers
 │   ├── build.sh
-│   └── gatk
+│   └── gatk4
 ├── gatk4-germline-snps-indels.nf
 ├── modules
 │   ├── bwa
@@ -34,21 +45,21 @@ $ tree -L 2
 ├── nextflow.config
 ├── params.yaml
 ├── test_data
-│   ├── download_test_data.sh
-│   ├── hg38_wgs_scattered_calling_intervals.txt
-│   ├── manifest-6samples.txt
-│   ├── sequence_grouping.txt
-│   ├── sequence_grouping_with_unmapped.txt
-│   └── unmapped_bams.tsv
+│   ├── manifest-3samples.txt
 ├── test_params.yaml
 └── workflows
-    └── format_conversion
+    ├── format_conversion
+    ├── preprocessing_mapping
+    ├── quality_recalibration
+    └── variant_discovery
+
+
 
 ```
 
 ## Salient features of the design
 
-- The `workflows` folder containers the (sub-)workflows in it's own unique folder
+- The `workflows` folder containers the (sub-)workflows in its own unique folder
 
 ``` 
 workflows/
