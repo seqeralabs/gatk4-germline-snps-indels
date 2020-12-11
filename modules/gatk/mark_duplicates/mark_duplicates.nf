@@ -16,8 +16,8 @@ process GATK_MARK_DUPLICATES {
 
     output:
     val(sampleId)
-    path("*_merged.deduped.bam")
-    path("*_merged.deduped.metrics.txt")
+    path("${sampleId}_merged.deduped.bam")
+    path("${sampleId}_merged.deduped.metrics.txt")
 
     script:
 

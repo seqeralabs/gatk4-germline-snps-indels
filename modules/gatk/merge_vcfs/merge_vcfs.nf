@@ -12,15 +12,13 @@ process GATK_MERGE_VCFS {
 
 
     input:
-
     tuple val(sampleId),
             path(input_vcfs_to_merge),
             path(inputs_vcf_indices)
 
 
     output:
-    tuple   val(sampleId),
-            path("${sampleId}.merged.vcf")
+    tuple val(sampleId), path("${sampleId}.merged.vcf")
 
     script:
 

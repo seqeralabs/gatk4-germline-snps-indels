@@ -24,7 +24,7 @@ process GATK_MERGE_BAM_ALIGNMENT {
 
     output:
     val(sampleId)
-    path "*.mapped.merged.bam"
+    path("${sampleId}.mapped.merged.bam")
 
     script:
     bwa_commandline = "bwa mem -K 100000000 -p -v 3 -t 8 -Y ${ref_fasta}"
