@@ -37,5 +37,7 @@ process GATK_GATHER_BAM_FILES {
 
     """
     touch "${sampleId}.recal.merged.bam"
+    touch "${sampleId}.recal.merged.bai"
+    touch "${sampleId}.recal.merged.bam.md5"
     """
 }

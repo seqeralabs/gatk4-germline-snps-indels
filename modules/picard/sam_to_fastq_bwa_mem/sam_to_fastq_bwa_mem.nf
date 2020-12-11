@@ -26,7 +26,7 @@ process PICARD_SAM_TO_FASTQ_BWA_MEM {
 
     output:
     val(sampleId)
-    path "*.mapped.bam"
+    path("${sampleId}.mapped.bam")
     path(input_unmapped_bam)
 
     script:

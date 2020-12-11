@@ -19,4 +19,9 @@ process BWA_GET_BWA_VERSION {
     | sed 's/Version: //' \
     | tr -d '\n'
     """
+
+    stub:
+    """
+    echo 0.7.15-r1140
+    """
 }
