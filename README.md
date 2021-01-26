@@ -1,6 +1,8 @@
 # gatk4-germline-snps-indels
 Workflow for germline short variant discovery using GATK4 written as per the Nextflow DSL2 best-practices.
 
+This pipeline was developed with significant contributions by [Diamond Age Data Science](https://diamondage.com/). 
+
 
 # Usage with Tower
 
