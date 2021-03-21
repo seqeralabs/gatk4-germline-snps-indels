@@ -1,0 +1,1 @@
+NA19651-A	NA19651	s3://1000genomes/phase3/data/NA19651/sequence_read/SRR047732_1.filt.fastq.gz	s3://1000genomes/phase3/data/NA19651/sequence_read/SRR047732_2.filt.fastq.gz	Solexa-26415	BI.PE.100506_SL-XCQ_0002_FC61GU6AAXX.3	2010-01-05	illumina	BI
