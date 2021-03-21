@@ -8,7 +8,6 @@ params.compression_level = 5
 
 process GATK_SORT_AND_FIX_TAGS {
     tag "${sampleId}"
-    container "quay.io/seqeralabs/gatk4:4.1.8.1"
     memory "16 GB"
     cpus 16
 

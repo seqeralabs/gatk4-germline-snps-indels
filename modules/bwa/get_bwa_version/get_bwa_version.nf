@@ -5,7 +5,6 @@ params.gitc_path = "/usr/gitc"
 
 process BWA_GET_BWA_VERSION {
     tag "BWA version"
-    container "quay.io/seqeralabs/genomes-in-the-cloud:2.3.1-1512499786"
 
     output:
     stdout

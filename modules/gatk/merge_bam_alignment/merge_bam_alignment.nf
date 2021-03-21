@@ -6,7 +6,6 @@ params.compression_level = 5
 
 process GATK_MERGE_BAM_ALIGNMENT {
     tag "${sampleId}"
-    container "quay.io/seqeralabs/gatk4:4.1.8.1"
     memory "16 GB"
     cpus 16
 
