@@ -5,6 +5,8 @@ params.gitc_path = "/usr/gitc"
 
 process BWA_GET_BWA_VERSION {
     tag "BWA version"
+    memory "16 GB"
+    cpus 16
 
     output:
     stdout
