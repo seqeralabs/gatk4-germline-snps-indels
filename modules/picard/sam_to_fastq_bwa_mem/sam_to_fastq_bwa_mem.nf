@@ -1,9 +1,8 @@
 nextflow.enable.dsl = 2
 
-params.gitc_path = "/usr/gitc"
 params.samtools_path = "samtools"
-params.bwa_path = "${params.gitc_path}/bwa"
-params.picard_path = "${params.picard_path}/picard.jar"
+params.bwa_path = "/usr/gitc/bwa"
+params.picard_path = "/usr/gitc/picard.jar"
 params.java_path = "java"
 params.java_opts = "-Xms3000m"
 params.compression_level = 5

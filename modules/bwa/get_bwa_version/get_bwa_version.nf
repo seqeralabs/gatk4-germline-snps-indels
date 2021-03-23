@@ -1,7 +1,6 @@
 nextflow.enable.dsl = 2
 
-params.gitc_path = "/usr/gitc"
-params.bwa_path = "${params.gitc_path}/bwa"
+params.bwa_path = "/usr/gitc/bwa"
 
 process BWA_GET_BWA_VERSION {
     tag "BWA version"
