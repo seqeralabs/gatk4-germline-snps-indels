@@ -6,7 +6,6 @@ params.java_opts = "-Xms3000m"
 
 process GATK_APPLY_BQSR {
     tag "${sampleId}_${subgroup_unmapped_name}"
-    container "quay.io/seqeralabs/gatk4:4.1.8.1"
     memory "16 GB"
     cpus 16
 

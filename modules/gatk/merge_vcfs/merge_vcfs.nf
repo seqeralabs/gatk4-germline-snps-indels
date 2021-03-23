@@ -6,7 +6,6 @@ params.java_opts = "-Xmx4G"
 
 process GATK_MERGE_VCFS {
     tag "${sampleId}"
-    container "quay.io/seqeralabs/gatk4:4.1.8.1"
     memory "16 GB"
     cpus 16
 

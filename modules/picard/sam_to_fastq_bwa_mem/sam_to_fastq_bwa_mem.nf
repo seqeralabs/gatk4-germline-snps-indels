@@ -6,8 +6,6 @@ params.compression_level = 5
 
 process PICARD_SAM_TO_FASTQ_BWA_MEM {
     tag "${sampleId}"
-
-    container "quay.io/seqeralabs/genomes-in-the-cloud:2.3.1-1512499786"
     memory "16 GB"
     cpus 16
 

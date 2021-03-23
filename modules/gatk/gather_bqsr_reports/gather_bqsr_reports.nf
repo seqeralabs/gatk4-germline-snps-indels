@@ -6,7 +6,6 @@ params.java_opts = "-Xms3000m"
 
 process GATK_GATHER_BQSR_REPORTS {
     tag "${sampleId}"
-    container "quay.io/seqeralabs/gatk4:4.1.8.1"
     memory "16 GB"
     cpus 16
 

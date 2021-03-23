@@ -6,7 +6,6 @@ params.contamination = 0
 
 process GATK_HAPLOTYPE_CALLER {
     tag "${sampleId}_${interval_chunk_name}"
-    container "quay.io/seqeralabs/gatk4:4.1.8.1"
     memory "16 GB"
     cpus 16
 
