@@ -1,6 +1,10 @@
 nextflow.enable.dsl = 2
 
 params.gitc_path = "/usr/gitc"
+params.samtools_path = "samtools"
+params.bwa_path = "${params.gitc_path}/bwa"
+params.picard_path = "${params.picard_path}/picard.jar"
+params.java_path = "java"
 params.java_opts = "-Xms3000m"
 params.compression_level = 5
 
@@ -33,18 +37,18 @@ process PICARD_SAM_TO_FASTQ_BWA_MEM {
     set -o pipefail
     set -e
 
-	java -Dsamjdk.compression_level=${params.compression_level} ${params.java_opts} \
-	    -jar ${params.gitc_path}/picard.jar \
+	${params.java_path} -Dsamjdk.compression_level=${params.compression_level} ${params.java_opts} \
+	    -jar ${params.picard_path} \
         SamToFastq \
         INPUT=${input_unmapped_bam} \
         FASTQ=/dev/stdout \
         INTERLEAVE=true \
         NON_PF=true \
     | \
-		${params.gitc_path}/bwa mem \
+		${params.bwa_path} mem \
 		 -K 100000000 -p -v 3 -t 16 -Y ${ref_fasta} /dev/stdin -  2> >(tee ${sampleId}.bwa.stderr.log >&2) \
     | \
-		samtools view -1 - > ${sampleId}.mapped.bam
+		${params.samtools_path} view -1 - > ${sampleId}.mapped.bam
     """
 
 
