@@ -8,8 +8,7 @@ params.compression_level = 5
 
 process GATK_SORT_AND_FIX_TAGS {
     tag "${sampleId}"
-    memory "16 GB"
-    cpus 16
+    label 'gatk4_container'
 
     input:
     val(sampleId)

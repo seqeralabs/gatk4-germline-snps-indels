@@ -6,8 +6,7 @@ params.compression_level = 5
 
 process GATK_MERGE_BAM_ALIGNMENT {
     tag "${sampleId}"
-    memory "16 GB"
-    cpus 16
+    label 'gatk4_container'
 
     input:
 

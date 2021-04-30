@@ -6,8 +6,7 @@ params.compression_level = 5
 
 process GATK_GATHER_BAM_FILES {
     tag "${sampleId}"
-    memory "16 GB"
-    cpus 16
+    label 'gatk4_container'
 
     input:
     tuple val(sampleId), path(input_recalibrated_bams)

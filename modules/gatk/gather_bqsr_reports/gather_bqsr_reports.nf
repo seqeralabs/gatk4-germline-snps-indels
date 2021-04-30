@@ -6,8 +6,7 @@ params.java_opts = "-Xms3000m"
 
 process GATK_GATHER_BQSR_REPORTS {
     tag "${sampleId}"
-    memory "16 GB"
-    cpus 16
+    label 'gatk4_container'
 
     input:
     tuple val(sampleId), path(input_bqsr_reports)

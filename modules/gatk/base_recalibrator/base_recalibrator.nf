@@ -6,8 +6,7 @@ params.java_opts = "-Xms4000m"
 
 process GATK_BASE_RECALIBRATOR {
     tag "${sampleId}_${subgroup_name}"
-    memory "16 GB"
-    cpus 16
+    label 'gatk4_container'
 
     input:
     tuple val(sampleId),
