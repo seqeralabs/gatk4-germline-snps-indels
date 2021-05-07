@@ -6,9 +6,7 @@ params.java_opts = "-Xmx4G"
 
 process GATK_MERGE_VCFS {
     tag "${sampleId}"
-    memory "16 GB"
-    cpus 16
-
+    label 'gatk4_container'
 
     input:
     tuple val(sampleId),

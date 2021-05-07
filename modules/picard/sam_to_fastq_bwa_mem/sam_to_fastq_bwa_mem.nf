@@ -6,8 +6,7 @@ params.compression_level = 5
 
 process PICARD_SAM_TO_FASTQ_BWA_MEM {
     tag "${sampleId}"
-    memory "16 GB"
-    cpus 16
+    label "gitc_container"
 
     input:
     tuple val(sampleId), path(input_unmapped_bam)

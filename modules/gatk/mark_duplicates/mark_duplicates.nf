@@ -6,8 +6,7 @@ params.compression_level = 5
 
 process GATK_MARK_DUPLICATES {
     tag "${sampleId}"
-    memory "32 GB"
-    cpus 16
+    label 'gatk4_container'
 
     input:
     val(sampleId)

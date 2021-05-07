@@ -6,8 +6,7 @@ params.java_opts = "-Xms3000m"
 
 process GATK_APPLY_BQSR {
     tag "${sampleId}_${subgroup_unmapped_name}"
-    memory "16 GB"
-    cpus 16
+    label 'gatk4_container'
 
 
     input:

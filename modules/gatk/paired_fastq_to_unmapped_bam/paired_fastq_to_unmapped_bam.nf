@@ -5,8 +5,7 @@ params.java_opts = "-Xms3000m"
 
 process GATK_PAIRED_FASTQ_TO_UNMAPPED_BAM {
     tag "${sample_name}"
-    memory "32 GB"
-    cpus 16
+    label 'gatk4_container'
 
 
     input:
