@@ -1,31 +1,25 @@
-# NOTE: THIS REPO SHOULD KEPT PRIVATE. THE CODE WITHIN SHOULD BE MERGED INTO A FORK OF THE REPO OF AWS & DIAMOND AGE DATA SCIENCE ONCE RELEASED.
-
 # gatk4-germline-snps-indels
 Workflow for germline short variant discovery using GATK4 written as per the Nextflow DSL2 best-practices.
 
 This pipeline was developed with significant contributions by [Diamond Age Data Science](https://diamondage.com/). 
 
-
-# Usage with Tower
-
-This pipeline is readily executable with `Tower`. 
-
-For example, if you wish to run this pipeline with `AWS Batch` please follow the steps outlined [here for setting up the AWS enviroment](https://help.tower.nf/docs/compute-envs/aws-batch/) and [here for launching the pipeline](https://help.tower.nf/docs/launch/overview/)  on the official Tower setup docs.
+The pipeline is built using Nextflow, a workflow tool to run tasks across multiple compute infrastructures in a very portable manner. It comes with Docker containers making installation trivial and results highly reproducible.
 
 
-# Stub-run (mock-run) for the pipeline
+# Quickstart
 
-For testing the workflow, you can enable the `stub-run` feature on tower while launching the pipeline.
-
-For testing locally, you can use the following command 
+To run this pipeline locally on your machine, install [Nextflow](https://nextflow.io) and use the following command:
 
 ```
 nextflow run 'https://github.com/seqeralabs/gatk4-germline-snps-indels' \
 		 -params-file params.yaml \
 		 -main-script gatk4-germline-snps-indels.nf \
-		 -latest \
-		 -stub-run
+		 -latest
 ```
+
+# Usage with Nextflow Tower
+
+Alternatively, this pipeline is readily executable with Nextflow Tower. It is availble in the Community Showcase workspace at [tower.nf](https://tower.nf).
 
 # Folder structure
 
