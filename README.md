@@ -13,12 +13,13 @@ To run this pipeline locally on your machine, install [Nextflow](https://nextflo
 ```
 nextflow run 'https://github.com/seqeralabs/gatk4-germline-snps-indels' \
 		 -params-file params/params.yaml \
+		 -profile docker
 		 -latest
 ```
 
 # Usage with Nextflow Tower
 
-Alternatively, this pipeline is readily executable with Nextflow Tower. It is availble in the Community Showcase workspace at [tower.nf](https://tower.nf).
+Alternatively, this pipeline is readily executable with Nextflow Tower. It is availble in the Community Showcase workspace at [tower.nf](https://tower.nf). While launching the workflow, please make sure (i) to specify fill the correct parameters via the `params` field and (ii) to `Config profile` field to `docker`.
 
 # Folder structure
 
