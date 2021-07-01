@@ -12,8 +12,7 @@ To run this pipeline locally on your machine, install [Nextflow](https://nextflo
 
 ```
 nextflow run 'https://github.com/seqeralabs/gatk4-germline-snps-indels' \
-		 -params-file params.yaml \
-		 -main-script gatk4-germline-snps-indels.nf \
+		 -params-file params/params.yaml \
 		 -latest
 ```
 
@@ -28,30 +27,30 @@ The code organization is as follows.
 ```
 $ tree -L 2
 .
-├── LICENSE
 ├── README.md
 ├── codespaces.md
+├── conf
+│   └── optimized_processes.config
 ├── containers
+│   ├── Readme.md
 │   ├── build.sh
 │   └── gatk4
-├── gatk4-germline-snps-indels.nf
+├── main.nf
 ├── modules
 │   ├── bwa
 │   ├── gatk
-│   ├── picard
-│   └── utils
+│   └── picard
 ├── nextflow.config
-├── params.yaml
+├── params
+│   ├── params.yaml
+│   └── test_params.yaml
+├── resources
 ├── test_data
-│   ├── manifest-3samples.txt
-├── test_params.yaml
 └── workflows
     ├── format_conversion
     ├── preprocessing_mapping
     ├── quality_recalibration
     └── variant_discovery
-
-
 
 ```
 
@@ -66,8 +65,6 @@ workflows/
     ├── nextflow.config
     └── test_params.yaml
 ```
-
-- The top-level file (in this case `gatk4-germline-snps-indels.nf`) is the primary workflow. It could be thought of as a counter-part for the top-level `main.nf`
 
 
 - The `modules` are designed around the idea of a specific tool (for example `gatk`) as the core abstraction, which contains wrappers for various sub-commands for `gatk`.
@@ -86,7 +83,7 @@ modules/gatk/
 ```
 
 
-- We have used default parameters for each module, making it executable in a standalone manner. In the  `modules/gatk/paired_fastq_to_unmapped_bam/paired_fastq_to_unmapped_bam.nf`, the default parameters have been initialized with default values.
+- We have used default parameters for each module, making it executable in a standalone manner. In the  `modules/gatk/paired_fastq_to_unmapped_bam/paired_fastq_to_unmapped_bam.nf`, the parameters have been initialized with default values.
 
 ```
 params.gatk_path = "/gatk/gatk"
@@ -145,10 +142,10 @@ manifest {
     name = 'GATK4 Germline SNP and Indel Analysis'
     description = 'Workflow for germline short variant discovery using GATK4'
     version = '0.0.1'
-    mainScript = 'gatk4-germline-snps-indels.nf'
+    mainScript = 'main.nf'
     defaultBranch = 'master'
     homePage = 'https://github.com/seqeralabs/gatk4-germline-snps-indels'
-    nextflowVersion = '>=20.07.1'
+    nextflowVersion = '>=21.04.1'
 }
 
 

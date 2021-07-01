@@ -10,7 +10,7 @@ known_indels_dbSNP:
 
 # List of samples to be analyzed
 input_fofn:
-  "s3://nextflow-ci/gatk4-germline-snps-indels/manifest-3samples.txt"
+  "s3://nextflow-ci/gatk4-germline-snps-indels/manifest-6samples.txt"
 
 # Main output dir
 outdir:
