@@ -1,7 +1,7 @@
 # gatk4-germline-snps-indels
 Workflow for germline short variant discovery using GATK4 written as per the Nextflow DSL2 best-practices.
 
-This pipeline was developed with significant contributions by [Diamond Age Data Science](https://diamondage.com/). 
+This pipeline was developed with significant contributions by [Diamond Age Data Science](https://diamondage.com/), you can read more about the infrastructure usage on the [AWS blogpost](https://aws.amazon.com/blogs/industries/running-gatk-workflows-on-aws-a-user-friendly-solution/).
 
 The pipeline is built using Nextflow, a workflow tool to run tasks across multiple compute infrastructures in a very portable manner. It comes with Docker containers making installation trivial and results highly reproducible.
 
