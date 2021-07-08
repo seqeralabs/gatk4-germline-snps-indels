@@ -1,1 +1,0 @@
-NA19651-A	NA19651	/root/gatk4-germline-snps-indels-nf/test_data/sequence_reads/SRR047732_1.filt.fastq.gz	/root/gatk4-germline-snps-indels-nf/test_data/sequence_reads/SRR047732_2.filt.fastq.gz	Solexa-26415	BI.PE.100506_SL-XCQ_0002_FC61GU6AAXX.3	2010-01-05	illumina	BI
