@@ -49,7 +49,7 @@
             "default": "s3://nf-tower-data/gatk4-germline-snps-indels-nf/references/Homo_sapiens_assembly38.dbsnp138.vcf",
             "description": "The location of dbSNP vcf file."
         },
-        "new_param_3": {
+        "scattered_calling_interval": {
             "type": "string",
             "default": "${projectDir}/resources/seqera_nf_tower_data/hg38_wgs_scattered_calling_intervals.txt",
             "description": "The location of scattered interval list files."
@@ -65,6 +65,6 @@
         "known_indels_dbSNP",
         "known_indels_mills",
         "dbSNP_vcf",
-        "new_param_3"
+        "scattered_calling_interval"
     ]
 }
