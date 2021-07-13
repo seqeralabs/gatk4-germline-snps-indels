@@ -7,55 +7,64 @@
     "properties": {
         "outdir": {
             "type": "string",
-            "default": "s3://nf-tower-bucket/scratch/gatk4-germline-snps-indels-nf/results"
+            "default": "s3://nf-tower-bucket/scratch/gatk4-germline-snps-indels-nf/results",
+            "description": "The output directory for the results of the analysis."
         },
         "input_fofn": {
             "type": "string",
-            "default": "${projectDir}/resources/seqera_nf_tower_data/manifest-2samples.txt"
-        },
-        "fasta": {
-            "type": "string",
-            "default": "s3://nf-tower-data/gatk4-germline-snps-indels-nf/references/Homo_sapiens_assembly38.fasta"
-        },
-        "sequence_grouping_unmapped": {
-            "type": "string",
-            "default": "s3://nf-tower-data/gatk4-germline-snps-indels-nf/sequence_grouping_with_unmapped.txt"
-        },
-        "sequence_grouping": {
-            "type": "string",
-            "default": "s3://nf-tower-data/gatk4-germline-snps-indels-nf/sequence_grouping.txt"
-        },
-        "known_indels_dbSNP": {
-            "type": "string",
-            "default": "s3://nf-tower-data/gatk4-germline-snps-indels-nf/references/Homo_sapiens_assembly38.known_indels.vcf.gz"
-        },
-        "known_indels_mills": {
-            "type": "string",
-            "default": "s3://nf-tower-data/gatk4-germline-snps-indels-nf/references/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz"
-        },
-        "dbSNP_vcf": {
-            "type": "string",
-            "default": "s3://nf-tower-data/gatk4-germline-snps-indels-nf/references/Homo_sapiens_assembly38.dbsnp138.vcf"
-        },
-        "new_param_3": {
-            "type": "string",
-            "default": "${projectDir}/resources/seqera_nf_tower_data/hg38_wgs_scattered_calling_intervals.txt"
+            "default": "${projectDir}/resources/seqera_nf_tower_data/manifest-2samples.txt",
+            "description": "The location of input samplesheet."
         },
         "unmapped_bams_list": {
             "type": "string",
             "default": "${projectDir}/resources/seqera_nf_tower_data/unmapped_bams.tsv"
+        },
+        "fasta": {
+            "type": "string",
+            "default": "s3://nf-tower-data/gatk4-germline-snps-indels-nf/references/Homo_sapiens_assembly38.fasta",
+            "description": "The location of input reference fasta file."
+        },
+        "sequence_grouping_unmapped": {
+            "type": "string",
+            "default": "s3://nf-tower-data/gatk4-germline-snps-indels-nf/sequence_grouping_with_unmapped.txt",
+            "description": "The location of chromosome sequences with unmapped tag."
+        },
+        "sequence_grouping": {
+            "type": "string",
+            "default": "s3://nf-tower-data/gatk4-germline-snps-indels-nf/sequence_grouping.txt",
+            "description": "The location of chromosome sequences."
+        },
+        "known_indels_dbSNP": {
+            "type": "string",
+            "default": "s3://nf-tower-data/gatk4-germline-snps-indels-nf/references/Homo_sapiens_assembly38.known_indels.vcf.gz",
+            "description": "The locations of known indels dbSNP."
+        },
+        "known_indels_mills": {
+            "type": "string",
+            "default": "s3://nf-tower-data/gatk4-germline-snps-indels-nf/references/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz",
+            "description": "The location of known indels Mills."
+        },
+        "dbSNP_vcf": {
+            "type": "string",
+            "default": "s3://nf-tower-data/gatk4-germline-snps-indels-nf/references/Homo_sapiens_assembly38.dbsnp138.vcf",
+            "description": "The location of dbSNP vcf file."
+        },
+        "new_param_3": {
+            "type": "string",
+            "default": "${projectDir}/resources/seqera_nf_tower_data/hg38_wgs_scattered_calling_intervals.txt",
+            "description": "The location of scattered interval list files."
         }
     },
     "required": [
         "outdir",
         "input_fofn",
+        "unmapped_bams_list",
         "fasta",
         "sequence_grouping_unmapped",
         "sequence_grouping",
         "known_indels_dbSNP",
         "known_indels_mills",
         "dbSNP_vcf",
-        "new_param_3",
-        "unmapped_bams_list"
+        "new_param_3"
     ]
 }
