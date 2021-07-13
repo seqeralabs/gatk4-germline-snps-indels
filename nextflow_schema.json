@@ -4,7 +4,13 @@
     "title": "Nextflow pipeline parameters",
     "description": "This pipeline uses Nextflow and processes some kind of data. The JSON Schema was built using the nf-core pipeline schema builder.",
     "type": "object",
-    "properties": {
+    "definitions": {
+        "input_output_options": {
+            "title": "Input/output options",
+            "type": "object",
+            "fa_icon": "fas fa-terminal",
+            "description": "Define where the pipeline should find input data and save output data.",
+            "properties": {
         "outdir": {
             "type": "string",
             "default": "s3://nf-tower-bucket/scratch/gatk4-germline-snps-indels-nf/results",
@@ -53,6 +59,24 @@
             "type": "string",
             "default": "${projectDir}/resources/seqera_nf_tower_data/hg38_wgs_scattered_calling_intervals.txt",
             "description": "The location of scattered interval list files."
+        }
+    }
+   }
+    },
+    "allOf": [
+        {
+            "$ref": "#/definitions/input_output_options"
+        }
+    ],
+    "properties": {
+        "reads": {
+            "type": "string"
+        },
+        "transcriptome": {
+            "type": "string"
+        },
+        "multiqc": {
+            "type": "string"
         }
     },
     "required": [
