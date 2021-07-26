@@ -1,94 +1,124 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
     "$id": "https://raw.githubusercontent.com/seqeralabs/gatk4-germline-snps-indels/master/nextflow_schema.json",
-    "title": "Nextflow pipeline parameters",
-    "description": "This pipeline uses Nextflow and processes some kind of data. The JSON Schema was built using the nf-core pipeline schema builder.",
+    "title": "seqeralabs/gatk4-germline-snps-indels pipeline parameters",
+    "description": "Workflow for germline short variant discovery using GATK4 written as per the Nextflow DSL2 best practices.",
     "type": "object",
     "definitions": {
         "input_output_options": {
-            "title": "Input/output options",
+            "title": "Input/Output options",
             "type": "object",
-            "fa_icon": "fas fa-terminal",
-            "description": "Define where the pipeline should find input data and save output data.",
+            "description": "",
+            "default": "",
             "properties": {
-        "outdir": {
-            "type": "string",
-            "default": "s3://nf-tower-bucket/scratch/gatk4-germline-snps-indels-nf/results",
-            "description": "The output directory for the results of the analysis."
+                "input_fofn": {
+                    "type": "string",
+                    "fa_icon": "fas fa-table",
+                    "default": "${projectDir}/resources/seqera_nf_tower_data/manifest-2samples.txt",
+                    "description": "The location of input samplesheet, by default it uses 2 samples."
+                },
+                "unmapped_bams_list": {
+                    "type": "string",
+                    "fa_icon": "fas fa-bars",
+                    "default": "${projectDir}/resources/seqera_nf_tower_data/unmapped_bams.tsv",
+                    "description": "The location of input samplesheet for bam files, by default it uses 2 samples."
+                },
+                "outdir": {
+                    "type": "string",
+                    "fa_icon": "fas fa-folder-open",
+                    "default": "s3://nf-tower-bucket/scratch/gatk4-germline-snps-indels-nf/results",
+                    "description": "The output directory for the results of the analysis."
+                }
+            },
+            "required": [
+                "input_fofn",
+                "unmapped_bams_list",
+                "outdir"
+            ],
+            "fa_icon": "fas fa-terminal"
         },
-        "input_fofn": {
-            "type": "string",
-            "default": "${projectDir}/resources/seqera_nf_tower_data/manifest-2samples.txt",
-            "description": "The location of input samplesheet."
+        "reference_files_options": {
+            "title": "Reference files options",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "fasta": {
+                    "type": "string",
+                    "fa_icon": "fas fa-file-code",
+                    "default": "s3://nf-tower-data/gatk4-germline-snps-indels-nf/references/Homo_sapiens_assembly38.fasta",
+                    "description": "The location of input reference fasta file."
+                },
+                "known_indels_dbSNP": {
+                    "type": "string",
+                    "fa_icon": "fas fa-file-archive",
+                    "default": "s3://nf-tower-data/gatk4-germline-snps-indels-nf/references/Homo_sapiens_assembly38.known_indels.vcf.gz",
+                    "description": "The location of reference known indels database archive."
+                },
+                "known_indels_mills": {
+                    "type": "string",
+                    "fa_icon": "far fa-file-archive",
+                    "default": "s3://nf-tower-data/gatk4-germline-snps-indels-nf/references/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz",
+                    "description": "The location of Mills and 1000G gold standard database archive."
+                },
+                "dbSNP_vcf": {
+                    "type": "string",
+                    "fa_icon": "far fa-file-alt",
+                    "default": "s3://nf-tower-data/gatk4-germline-snps-indels-nf/references/Homo_sapiens_assembly38.dbsnp138.vcf",
+                    "description": "The location variant calling file for the SNP database (dbSNP)."
+                },
+                "scattered_calling_interval": {
+                    "type": "string",
+                    "fa_icon": "fas fa-file-alt",
+                    "default": "${projectDir}/resources/seqera_nf_tower_data/hg38_wgs_scattered_calling_intervals.txt",
+                    "description": "The location of target chromosome interval definition file."
+                }
+            },
+            "required": [
+                "fasta",
+                "known_indels_dbSNP",
+                "known_indels_mills",
+                "dbSNP_vcf",
+                "scattered_calling_interval"
+            ],
+            "fa_icon": "fas fa-anchor",
+            "help_text": ""
         },
-        "unmapped_bams_list": {
-            "type": "string",
-            "default": "${projectDir}/resources/seqera_nf_tower_data/unmapped_bams.tsv"
-        },
-        "fasta": {
-            "type": "string",
-            "default": "s3://nf-tower-data/gatk4-germline-snps-indels-nf/references/Homo_sapiens_assembly38.fasta",
-            "description": "The location of input reference fasta file."
-        },
-        "sequence_grouping_unmapped": {
-            "type": "string",
-            "default": "s3://nf-tower-data/gatk4-germline-snps-indels-nf/sequence_grouping_with_unmapped.txt",
-            "description": "The location of chromosome sequences with unmapped tag."
-        },
-        "sequence_grouping": {
-            "type": "string",
-            "default": "s3://nf-tower-data/gatk4-germline-snps-indels-nf/sequence_grouping.txt",
-            "description": "The location of chromosome sequences."
-        },
-        "known_indels_dbSNP": {
-            "type": "string",
-            "default": "s3://nf-tower-data/gatk4-germline-snps-indels-nf/references/Homo_sapiens_assembly38.known_indels.vcf.gz",
-            "description": "The locations of known indels dbSNP."
-        },
-        "known_indels_mills": {
-            "type": "string",
-            "default": "s3://nf-tower-data/gatk4-germline-snps-indels-nf/references/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz",
-            "description": "The location of known indels Mills."
-        },
-        "dbSNP_vcf": {
-            "type": "string",
-            "default": "s3://nf-tower-data/gatk4-germline-snps-indels-nf/references/Homo_sapiens_assembly38.dbsnp138.vcf",
-            "description": "The location of dbSNP vcf file."
-        },
-        "scattered_calling_interval": {
-            "type": "string",
-            "default": "${projectDir}/resources/seqera_nf_tower_data/hg38_wgs_scattered_calling_intervals.txt",
-            "description": "The location of scattered interval list files."
+        "chromosome_grouping_files_options": {
+            "title": "Chromosome grouping files options",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "sequence_grouping_unmapped": {
+                    "type": "string",
+                    "fa_icon": "fas fa-stream",
+                    "default": "s3://nf-tower-data/gatk4-germline-snps-indels-nf/sequence_grouping_with_unmapped.txt",
+                    "description": "The location of chromosome sequences with unmapped tag."
+                },
+                "sequence_grouping": {
+                    "type": "string",
+                    "fa_icon": "fas fa-clipboard-list",
+                    "default": "s3://nf-tower-data/gatk4-germline-snps-indels-nf/sequence_grouping.txt",
+                    "description": "The location of chromosome sequences."
+                }
+            },
+            "required": [
+                "sequence_grouping_unmapped",
+                "sequence_grouping"
+            ],
+            "fa_icon": "fas fa-object-ungroup"
         }
-    }
-   }
     },
     "allOf": [
         {
             "$ref": "#/definitions/input_output_options"
-        }
-    ],
-    "properties": {
-        "reads": {
-            "type": "string"
         },
-        "transcriptome": {
-            "type": "string"
+        {
+            "$ref": "#/definitions/reference_files_options"
         },
-        "multiqc": {
-            "type": "string"
+        {
+            "$ref": "#/definitions/chromosome_grouping_files_options"
         }
-    },
-    "required": [
-        "outdir",
-        "input_fofn",
-        "unmapped_bams_list",
-        "fasta",
-        "sequence_grouping_unmapped",
-        "sequence_grouping",
-        "known_indels_dbSNP",
-        "known_indels_mills",
-        "dbSNP_vcf",
-        "scattered_calling_interval"
     ]
 }
