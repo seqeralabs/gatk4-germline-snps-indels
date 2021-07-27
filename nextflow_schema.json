@@ -2,7 +2,7 @@
     "$schema": "http://json-schema.org/draft-07/schema",
     "$id": "https://raw.githubusercontent.com/seqeralabs/gatk4-germline-snps-indels/master/nextflow_schema.json",
     "title": "seqeralabs/gatk4-germline-snps-indels pipeline parameters",
-    "description": "Workflow for germline short variant discovery using GATK4 written as per the Nextflow DSL2 best practices.",
+    "description": "Workflow for germline short variant discovery using GATK4 written in Nextflow.",
     "type": "object",
     "definitions": {
         "input_output_options": {
@@ -38,7 +38,7 @@
             "fa_icon": "fas fa-terminal"
         },
         "reference_files_options": {
-            "title": "Reference files options",
+            "title": "Reference file options",
             "type": "object",
             "description": "",
             "default": "",
