@@ -1,5 +1,3 @@
-nextflow.enable.dsl = 2
-
 params.gatk_path = "gatk"
 params.java_opts = "-Xms4000m"
 
