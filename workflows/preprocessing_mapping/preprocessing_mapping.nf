@@ -5,7 +5,6 @@ nextflow.enable.dsl = 2
 // Read and derive file names and location from the params
 //================================================================================
 
-unmapped_bams = file(params.unmapped_bams_list)
 ref_fasta = file(params.fasta)
 ref_alt = file("${params.fasta}.64.alt")
 ref_amb = file("${params.fasta}.64.amb")

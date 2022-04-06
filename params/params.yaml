@@ -1,7 +1,6 @@
 
 # Samplesheets
 
-unmapped_bams_list: "${projectDir}/resources/seqera_nf_tower_data/unmapped_bams.tsv"
 
 input_fofn: "${projectDir}/resources/seqera_nf_tower_data/manifest-6samples.txt"
 

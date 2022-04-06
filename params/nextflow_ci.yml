@@ -20,6 +20,3 @@ sequence_grouping: "s3://nextflow-ci/gatk4-germline-snps-indels-nf/sequence_grou
 sequence_grouping_unmapped: "s3://nextflow-ci/gatk4-germline-snps-indels-nf/sequence_grouping_with_unmapped.txt"
 
 scattered_calling_interval: "s3://nextflow-ci/gatk4-germline-snps-indels-nf/hg38_wgs_scattered_calling_intervals.txt"
-
-unmapped_bams_list: "s3://nextflow-ci/gatk4-germline-snps-indels-nf/unmapped_bams.tsv"
-

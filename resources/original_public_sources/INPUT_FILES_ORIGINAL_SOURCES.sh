@@ -1,9 +1,5 @@
 outdir - s3://nextflow-ci/gatk-ubams/results/
 
-# Intermediate file
-unmapped_bams_list - s3://nextflow-ci/gatk-ubams/unmapped_bams.tsv
-
-
 # From AWS public bucket
 fasta - s3://broad-references/hg38/v0/Homo_sapiens_assembly38.fasta 
 
