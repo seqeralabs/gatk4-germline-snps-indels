@@ -1,5 +1,3 @@
-nextflow.enable.dsl = 2
-
 params.samtools_path = "samtools"
 params.bwa_path = "/usr/gitc/bwa"
 params.picard_path = "/usr/gitc/picard.jar"

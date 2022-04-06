@@ -1,5 +1,3 @@
-nextflow.enable.dsl = 2
-
 params.bwa_path = "/usr/gitc/bwa"
 
 process BWA_GET_BWA_VERSION {

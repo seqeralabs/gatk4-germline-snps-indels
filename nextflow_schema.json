@@ -17,12 +17,6 @@
                     "default": "${projectDir}/resources/seqera_nf_tower_data/manifest-2samples.txt",
                     "description": "The location of input samplesheet, by default it uses 2 samples."
                 },
-                "unmapped_bams_list": {
-                    "type": "string",
-                    "fa_icon": "fas fa-bars",
-                    "default": "${projectDir}/resources/seqera_nf_tower_data/unmapped_bams.tsv",
-                    "description": "The location of input samplesheet for bam files, by default it uses 2 samples."
-                },
                 "outdir": {
                     "type": "string",
                     "fa_icon": "fas fa-folder-open",
