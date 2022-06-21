@@ -155,7 +155,7 @@ process.maxRetries = 3
 
 
 profiles {
-    dockerhub {
+    docker {
         process {
             errorStrategy = 'retry'
             ext.registry = 'https://hub.docker.com/r/seqeralabs/'
