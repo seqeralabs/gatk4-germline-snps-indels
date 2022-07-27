@@ -37,7 +37,7 @@ process PICARD_SAM_TO_FASTQ_BWA_MEM {
 	    -jar ${params.picard_path} \
         SamToFastq \
         INPUT=${input_unmapped_bam} \
-        FASTQ=/dev/out \
+        FASTQ=/dev/stdout \
         INTERLEAVE=true \
         NON_PF=true \
     | \
