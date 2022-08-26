@@ -50,7 +50,7 @@ workflow {
     FORMAT_CONVERSION({ fastq_params_ch })
 
     PREPROCESSING_MAPPING(FORMAT_CONVERSION.out)
-/*
+
     QUALITY_RECALIBRATION(PREPROCESSING_MAPPING.out)
 
     VARIANT_DISCOVERY(QUALITY_RECALIBRATION.out)
@@ -62,6 +62,6 @@ workflow {
             .collectFile(
                     name: 'merged_vcfs.tsv', newLine: true, storeDir: "${params.outdir}"
             )
-*/
+
 }
 

@@ -48,7 +48,6 @@ workflow PREPROCESSING_MAPPING {
             ref_fasta_fai
     )
 
-    /*
     bwa_version = BWA_GET_BWA_VERSION()
 
     GATK_MERGE_BAM_ALIGNMENT(
@@ -77,6 +76,5 @@ workflow PREPROCESSING_MAPPING {
 
     emit:
     GATK_SORT_AND_FIX_TAGS.out
-    */
-}
 
+}

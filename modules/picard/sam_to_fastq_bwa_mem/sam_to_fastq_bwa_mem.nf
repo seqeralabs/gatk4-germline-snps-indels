@@ -42,7 +42,7 @@ process PICARD_SAM_TO_FASTQ_BWA_MEM {
         NON_PF=true \
     | \
 		${params.bwa_path} mem \
-		 -K 100000000 -p -v 3 -t 16 -Y ${ref_fasta} /dev/stdin -  2> >(tee ${sampleId}.bwa.stderr.log >&2) \
+            -K 100000000 -p -v 3 -t ${task.cpus} -Y ${ref_fasta} /dev/stdin -  2> >(tee ${sampleId}.bwa.stderr.log >&2) \
     | \
 		${params.samtools_path} view -1 - > ${sampleId}.mapped.bam
     """
